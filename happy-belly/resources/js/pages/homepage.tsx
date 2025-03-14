@@ -4,6 +4,7 @@ import LogInHomepageButton from "@/components/log-in-homepage-button";
 import { type SharedData } from '@/types';
 import { usePage } from '@inertiajs/react';
 import IntroHomepage from "@/components/intro-homepage";
+import FeaturesHomepage from "@/components/features-homepage";
 export default function homepage() {
     const { auth } = usePage<SharedData>().props
 
@@ -13,7 +14,8 @@ export default function homepage() {
                 <NavBar />
                 <Logo />
                 <IntroHomepage />
-                {!auth.user && <LogInHomepageButton />}
+                {/*{!auth.user && <LogInHomepageButton />}*/}
+                <FeaturesHomepage />
             </div>
         </>
     )
