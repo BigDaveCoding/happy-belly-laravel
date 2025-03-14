@@ -21,7 +21,7 @@ export default function NavBar() {
             )}
             {/*nav bar if user is logged in*/}
             {navBarOpen && auth.user && (
-                <div className="bg-bg-color font-main-fredoka  absolute flex w-full flex-col justify-end ">
+                <div className="bg-bg-color font-main-fredoka  absolute flex w-full flex-col justify-end z-40">
                     <Link className=" border-b-primary-color border-b-1 px-2 py-2 text-right" href={route('home')}>
                         Home <i className="fa-solid fa-house w-10 pl-2 text-center text-xl"></i>
                     </Link>
