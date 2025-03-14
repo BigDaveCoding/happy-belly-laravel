@@ -14,7 +14,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
-Route::get('/recipe', [RecipeController::class, 'all'])->name('recipe');
+// creating API with recipe data to localhost:8000/recipeData
+Route::get('/recipeData', [RecipeController::class, 'all']);
+
+Route::get('/recipes', function () {
+    return Inertia::render('recipes');
+})->name('recipes');
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
