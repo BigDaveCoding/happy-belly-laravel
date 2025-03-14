@@ -25,7 +25,7 @@ export default function NavBar() {
                     <Link className=" border-b-primary-color border-b-1 px-2 py-2 text-right" href={route('home')}>
                         Home <i className="fa-solid fa-house w-10 pl-2 text-center text-xl"></i>
                     </Link>
-                    <Link className="border-b-primary-color border-b-1 px-2 py-2 text-right" href={route('recipe')}>
+                    <Link className="border-b-primary-color border-b-1 px-2 py-2 text-right" href={route('recipes')}>
                         Recipes <i className="fa-solid fa-utensils w-10 pl-2 text-center text-xl"></i>
                     </Link>
                     <Link className="border-b-primary-color border-b-1 px-2 py-2 text-right" href={route('home')}>
