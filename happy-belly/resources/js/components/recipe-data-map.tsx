@@ -14,10 +14,9 @@ export default function RecipeDataMap({recipeData}:RecipeDataMapProps) {
             {recipeData.length > 0 ? (
                 <div>
                     {recipeData.map((recipe) => (
-                        <div key={recipe.id} className="m-4 p-4 border border-gray-300 rounded-lg shadow-md">
-                            <h2 className="text-2xl capitalize font-bold">{recipe.name}</h2>
-                            <p className="text-xl">{recipe.description}</p>
-                            <img src={recipe['image']} alt={recipe['name']} />
+                        <div key={recipe.id} className="m-4 p-4 border border-gray-300 rounded-lg shadow-md bg-bg-color">
+                            <h2 className="text-2xl capitalize font-bold pb-2">{recipe.name}</h2>
+                            <img className="pb-2" src={recipe['image']} alt={recipe['name']} />
                             <p className="italic">Cooking Time: {recipe['cooking_time']} minutes</p>
                         </div>
                     ))}
