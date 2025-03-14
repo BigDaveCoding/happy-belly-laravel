@@ -11,8 +11,6 @@ export default function NavBar() {
         setNavBarOpen(!navBarOpen);
     }
 
-    // console.log(navBarOpen)
-
     return (
         <>
             {auth.user && (
@@ -41,7 +39,7 @@ export default function NavBar() {
                 </div>
             )}
 
-            {/*nav bar if user is not logged in - just a icon that links to the login page*/}
+            {/*nav bar if user is not logged in - just an icon that links to the login page*/}
             {!auth.user && (
                 <div className="flex justify-end p-2">
                     <Link className="px-2 py-2 text-right" href={route('login')}>
