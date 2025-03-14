@@ -1,4 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
 @import 'tailwindcss';
+@import "@fortawesome/fontawesome-free/css/all.css";
 
 @plugin 'tailwindcss-animate';
 
