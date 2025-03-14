@@ -17,7 +17,7 @@ class RecipeSeeder extends Seeder
             DB::table('recipes')->insert([
                 'name' => fake()->words(2, true),
                 'description' => fake()->words(20, true),
-                'image' => fake()->imageUrl(),
+                'image' => 'https://placehold.co/600x400',
                 'cooking_time' => fake()->time('i')
             ]);
         }
