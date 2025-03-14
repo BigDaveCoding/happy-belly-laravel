@@ -25,8 +25,7 @@ export default function Recipes({recipes}:{recipes: Recipe[]}) {
                     </p>
                 </div>
 
-                <h3 className="text-2xl font-main-noto underline underline-offset-4 p-1 mx-2">Our Recipes</h3>
-                <p className="italic font-main-fredoka mx-2">(Click title to see more)</p>
+                <h3 className="text-2xl font-main-noto underline underline-offset-4 p-2 mx-2">Our Recipes</h3>
                 <div className="bg-primary-color/30 mx-2 h-[550px] overflow-scroll rounded-2xl border-1 bg-[url(/images/geometric-bg-one-1000x1000.png)] bg-cover">
                     {recipes && <RecipeDataMap recipeData={recipes} />}
                 </div>
