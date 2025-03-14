@@ -1,3 +1,5 @@
+import {Link} from "@inertiajs/react";
+
 interface Recipe {
     id: number;
     name: string;
@@ -18,6 +20,10 @@ export default function RecipeDataMap({recipeData}:RecipeDataMapProps) {
                             <h2 className="text-2xl capitalize font-bold pb-2">{recipe.name}</h2>
                             <img className="pb-2" src={recipe['image']} alt={recipe['name']} />
                             <p className="italic">Cooking Time: {recipe['cooking_time']} minutes</p>
+                            <p className="italic">Serves x</p>
+                            <Link href={`/singleRecipe/${recipe.id}`} className="text-blue-500 underline underline-offset-4 block text-right">
+                                View Full Recipe
+                            </Link>
                         </div>
                     ))}
                 </div>
