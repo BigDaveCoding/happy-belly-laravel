@@ -9,4 +9,12 @@ class CookingInstruction extends Model
 {
     /** @use HasFactory<\Database\Factories\CookingInstructionFactory> */
     use HasFactory;
+
+    protected $fillable = ['recipe_id', 'step', 'instruction'];
+
+    // Define a One-to-Many relationship (Each step belongs to one recipe)
+    public function recipe()
+    {
+        return $this->belongsTo(Recipe::class);
+    }
 }
