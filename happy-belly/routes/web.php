@@ -46,5 +46,9 @@ Route::get('/singleRecipe/{id}', function ($id) {
     ]);
 })->name('singleRecipe');
 
+Route::get('/recipe/add', function() {
+    return Inertia::render('addRecipe');
+});
+
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

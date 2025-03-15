@@ -11,4 +11,11 @@ class RecipeController extends Controller
     {
         return Recipe::all();
     }
+
+    public function create(Request $request)
+    {
+        $recipe = new Recipe();
+
+
+    }
 }
