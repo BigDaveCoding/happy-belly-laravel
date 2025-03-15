@@ -40,3 +40,26 @@ export interface User {
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
 }
+
+export interface Ingredient {
+    id: number,
+    name: string,
+    food_group: string,
+    allergen: boolean,
+
+}
+interface cookingInstructions {
+    recipe_id: number,
+    step: number,
+    instruction: string,
+}
+
+export interface SingleRecipeIngredientsInstructions {
+    id: number;
+    name: string;
+    description: string;
+    image: string;
+    cooking_time: string;
+    ingredients: Ingredient[]
+    cooking_instructions: cookingInstructions[]
+}
