@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('homepage');
+    return Inertia::render('homepage',[
+        'userId' => Auth::id()
+    ]);
 })->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -27,10 +29,9 @@ Route::middleware(['auth'])->group(function () {
         $userRecipes = Recipe::where('user_id', Auth::id())->get();
 
         return Inertia::render('recipes', [
-            'recipes' => $recipes,
             'adminRecipes' => $adminRecipes,
             'userRecipes' => $userRecipes,
-            'user_id' => Auth::id()
+            'userId' => Auth::id()
         ]);
     })->name('recipes');
 });
@@ -41,6 +42,7 @@ Route::get('/singleRecipe/{id}', function ($id) {
 
     return Inertia::render('singleRecipe', [
         'recipe' => $recipe, // Passing data as a prop
+        'userId' => Auth::id()
     ]);
 })->name('singleRecipe');
 

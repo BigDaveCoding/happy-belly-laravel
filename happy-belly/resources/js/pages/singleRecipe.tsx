@@ -3,12 +3,12 @@ import NavBar from "@/components/navbar";
 import RecipeIngredientsMap from "@/components/recipe-ingredients-map";
 
 
-export default function SingleRecipe({ recipe }: { recipe: SingleRecipeIngredientsInstructions }) {
+export default function SingleRecipe({userId, recipe }: {userId: number|null, recipe: SingleRecipeIngredientsInstructions }) {
     console.log(recipe)
     return (
         <>
             <div className="font-main-fredoka">
-                <NavBar />
+                <NavBar userId={userId} />
                 <div className="grid grid-cols-1 gap-2 p-2">
                     <h1 className="text-5xl text-center font-medium capitalize">{recipe.name}</h1>
                     <p className="text-lg">{recipe.description}</p>

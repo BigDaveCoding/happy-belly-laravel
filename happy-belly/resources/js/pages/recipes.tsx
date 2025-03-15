@@ -3,7 +3,7 @@ import NavBar from "@/components/navbar";
 import RecipesPageTitle from "@/components/recipes-page-title";
 import { Recipe } from "@/types"
 
-export default function Recipes({adminRecipes, userRecipes}:{adminRecipes: Recipe[], userRecipes: Recipe[]}) {
+export default function Recipes({userId, adminRecipes, userRecipes}:{userId: number|null, adminRecipes: Recipe[], userRecipes: Recipe[]}) {
 
     console.log("admin recipes", adminRecipes)
     console.log("user recipes",userRecipes)
@@ -11,7 +11,7 @@ export default function Recipes({adminRecipes, userRecipes}:{adminRecipes: Recip
     return (
         <>
             <div className="font-main-fredoka bg-bg-color min-h-dvh">
-                <NavBar />
+                <NavBar userId={userId}/>
                 <RecipesPageTitle />
 
                 <div className="flex flex-col gap-4 px-2 pb-4 text-center">
