@@ -56,7 +56,10 @@ export interface Ingredient {
     name: string,
     food_group: string,
     allergen: boolean,
-
+    pivot: {
+        quantity: number,
+        unit: string
+    }
 }
 interface cookingInstructions {
     recipe_id: number,
