@@ -41,6 +41,14 @@ export interface User {
     [key: string]: unknown; // This allows for additional properties...
 }
 
+export interface Recipe {
+    id: number;
+    name: string;
+    description: string;
+    image: string;
+    cooking_time: string;
+}
+
 export interface Ingredient {
     id: number,
     name: string,
