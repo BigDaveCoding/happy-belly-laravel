@@ -50,5 +50,9 @@ Route::get('/recipe/add', function() {
     return Inertia::render('addRecipe');
 });
 
+Route::middleware(['web'])->group(function () {
+    Route::post('/recipe/add', [RecipeController::class, 'create']);
+});
+
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

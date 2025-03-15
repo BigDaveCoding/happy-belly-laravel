@@ -19,9 +19,9 @@ export default function addRecipe() {
                 <input className="border-1 border-black inset-shadow-sm inset-shadow-slate-300 p-2 rounded" type="text" name="recipe_cooking_time" placeholder="30" />
 
                 <label htmlFor="recipe_serves">Serves :</label>
-                <input className="border-1 border-black inset-shadow-sm inset-shadow-slate-300 p-2 rounded" type="text" name="recipe_serves" placeholder="4" />
+                <input className="border-1 border-black inset-shadow-sm inset-shadow-slate-300 p-2 rounded" type="number" name="recipe_serves" placeholder="4" />
 
-
+                <input className="col-span-2 border-1 p-2 w-8/12 bg-primary-color justify-self-center rounded inset-shadow-sm inset-shadow-black/30" type="submit" value="Add recipe" />
 
             </form>
         </>
