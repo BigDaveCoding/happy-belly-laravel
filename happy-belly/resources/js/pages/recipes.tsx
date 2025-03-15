@@ -1,14 +1,7 @@
 import RecipeDataMap from "@/components/recipe-data-map";
 import NavBar from "@/components/navbar";
 import RecipesPageTitle from "@/components/recipes-page-title";
-
-interface Recipe {
-    id: number;
-    name: string;
-    description: string;
-    image: string;
-    cooking_time: string;
-}
+import { Recipe } from "@/types"
 
 export default function Recipes({recipes}:{recipes: Recipe[]}) {
 
