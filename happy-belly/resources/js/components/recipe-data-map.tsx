@@ -1,10 +1,10 @@
 import {Link} from "@inertiajs/react";
 import { Recipe } from "@/types"
 
-interface RecipeDataMapProps {
-    recipeData: Recipe[];
-}
-export default function RecipeDataMap({recipeData}:RecipeDataMapProps) {
+// interface RecipeDataMapProps {
+//     recipeData: Recipe[];
+// }
+export default function RecipeDataMap({recipeData}: { recipeData: Recipe[] }) {
     return (
         <>
             {recipeData.length > 0 ? (
