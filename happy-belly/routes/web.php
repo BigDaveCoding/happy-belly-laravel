@@ -31,10 +31,10 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/singleRecipe/{id}', function ($id) {
 
-    $recipe = Recipe::findOrFail($id); // Fetch the recipe by ID
+    $recipe = Recipe::with('ingredients', 'cookingInstructions:recipe_id,step,instruction')->findOrFail($id); // Fetch the recipe by ID
 
     return Inertia::render('singleRecipe', [
-        'recipe' => $recipe // Passing data as a prop
+        'recipe' => $recipe, // Passing data as a prop
     ]);
 })->name('singleRecipe');
 
