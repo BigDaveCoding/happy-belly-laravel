@@ -13,7 +13,10 @@ export default function NavBar({userId}:{userId: number|null}) {
             {userId !== null && (
                 <div className="flex justify-between items-center border-b-1 border-b-primary-color p-2">
                     <Link href={`/`}><p className="font-main-fredoka text-2xl">HB</p></Link>
-                    <i onClick={() => toggleNavBar()} className="fa-solid fa-bars w-10 cursor-pointer pl-2 text-center text-3xl"></i>
+                    <i onClick={() => toggleNavBar()} className="fa-solid fa-bars w-10 cursor-pointer pl-2 text-center text-3xl"
+                       role="button"
+                       aria-label="Toggle navigation">
+                    </i>
                 </div>
             )}
             {/*nav bar if user is logged in*/}
