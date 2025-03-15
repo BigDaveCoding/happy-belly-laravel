@@ -3,7 +3,10 @@ import NavBar from "@/components/navbar";
 import RecipesPageTitle from "@/components/recipes-page-title";
 import { Recipe } from "@/types"
 
-export default function Recipes({recipes}:{recipes: Recipe[]}) {
+export default function Recipes({adminRecipes, userRecipes}:{adminRecipes: Recipe[], userRecipes: Recipe[]}) {
+
+    console.log("admin recipes", adminRecipes)
+    console.log("user recipes",userRecipes)
 
     return (
         <>
@@ -20,7 +23,11 @@ export default function Recipes({recipes}:{recipes: Recipe[]}) {
 
                 <h3 className="text-2xl font-main-noto underline underline-offset-4 p-2 mx-2">Our Recipes</h3>
                 <div className="bg-primary-color/30 mx-2 h-[550px] overflow-scroll rounded-2xl border-1 bg-[url(/images/geometric-bg-one-1000x1000.png)] bg-cover">
-                    {recipes && <RecipeDataMap recipeData={recipes} />}
+                    {adminRecipes && <RecipeDataMap recipeData={adminRecipes} />}
+                </div>
+                <h3 className="text-2xl font-main-noto underline underline-offset-4 p-2 mx-2">User Recipes</h3>
+                <div className="bg-primary-color/30 mx-2 h-[550px] overflow-scroll rounded-2xl border-1 bg-[url(/images/geometric-bg-one-1000x1000.png)] bg-cover">
+                    {userRecipes && <RecipeDataMap recipeData={userRecipes} />}
                 </div>
             </div>
         </>

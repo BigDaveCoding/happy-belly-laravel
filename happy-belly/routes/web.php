@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\RecipeController;
 use App\Models\Recipe;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -22,9 +23,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/recipes', function () {
 
         $recipes = Recipe::all();
+        $adminRecipes = Recipe::where('user_id', 1)->get();
+        $userRecipes = Recipe::where('user_id', Auth::id())->get();
 
         return Inertia::render('recipes', [
-            'recipes' => $recipes
+            'recipes' => $recipes,
+            'adminRecipes' => $adminRecipes,
+            'userRecipes' => $userRecipes,
+            'user_id' => Auth::id()
         ]);
     })->name('recipes');
 });
