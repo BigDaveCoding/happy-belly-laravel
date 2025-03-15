@@ -18,7 +18,8 @@ class RecipeSeeder extends Seeder
                 'name' => fake()->words(2, true),
                 'description' => fake()->words(20, true),
                 'image' => 'https://placehold.co/600x400',
-                'cooking_time' => fake()->time('i')
+                'cooking_time' => fake()->time('i'),
+                'serves' => rand(1, 4)
             ]);
         }
     }

@@ -47,6 +47,7 @@ export interface Recipe {
     description: string;
     image: string;
     cooking_time: string;
+    serves: number;
 }
 
 export interface Ingredient {

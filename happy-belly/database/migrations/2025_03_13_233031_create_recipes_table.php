@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('image')->nullable();
             $table->string('cooking_time');
+            $table->integer('serves')->nullable();
             $table->timestamps();
         });
     }
