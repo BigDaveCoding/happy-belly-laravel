@@ -1,18 +1,24 @@
-interface Recipe {
-    id: number;
-    name: string;
-    description: string;
-    image: string;
-    cooking_time: string;
-}
+import { SingleRecipeIngredientsInstructions } from "@/types";
+import NavBar from "@/components/navbar";
+import RecipeIngredientsMap from "@/components/recipe-ingredients-map";
 
-export default function SingleRecipe({ recipe }: { recipe: Recipe }) {
+
+export default function SingleRecipe({ recipe }: { recipe: SingleRecipeIngredientsInstructions }) {
+    console.log(recipe)
     return (
         <>
-            <h1 className="text-3xl font-bold">{recipe.name}</h1>
-            <img src={recipe.image} alt={recipe.name} className="w-full max-w-md rounded-lg shadow-md" />
-            <p className="text-lg mt-2">{recipe.description}</p>
-            <p className="text-sm italic">Cooking Time: {recipe.cooking_time} minutes</p>
+            <div className="font-main-fredoka">
+                <NavBar />
+                <div className="grid grid-cols-1 gap-2 p-2">
+                    <h1 className="text-5xl text-center font-medium capitalize">{recipe.name}</h1>
+                    <p className="text-lg">{recipe.description}</p>
+                    <img src={recipe.image} alt={recipe.name} className="w-full max-w-md rounded-lg shadow-md" />
+                </div>
+
+                <h2>Ingredients</h2>
+                <RecipeIngredientsMap ingredients={recipe.ingredients} />
+
+            </div>
         </>
     );
 }
