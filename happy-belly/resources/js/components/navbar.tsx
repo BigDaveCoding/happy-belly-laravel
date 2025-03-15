@@ -1,5 +1,6 @@
 import { Link } from '@inertiajs/react';
 import {useState} from "react";
+import LogoutButton from "@/components/logout-button";
 
 export default function NavBar({userId}:{userId: number|null}) {
     const [navBarOpen, setNavBarOpen] = useState(false)
@@ -34,9 +35,12 @@ export default function NavBar({userId}:{userId: number|null}) {
                     <Link className="border-b-primary-color border-b-1 px-2 py-2 text-right" href={`/`}>
                         Food Diary <i className="fa-solid fa-book w-10 pl-2 text-center text-xl"></i>
                     </Link>
-                    <Link className="border-b-primary-color border-b-1 px-2 py-2 text-right" href={`dashboard`}>
+                    <Link className="border-b-primary-color border-b-1 px-2 py-2 text-right" href={`/settings/profile`}>
                         Account <i className="fa-solid fa-circle-user w-10 pl-2 text-center text-xl"></i>
                     </Link>
+
+                    <LogoutButton />
+
                 </div>
             )}
 
