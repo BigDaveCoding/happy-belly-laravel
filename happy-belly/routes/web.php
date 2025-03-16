@@ -54,5 +54,19 @@ Route::middleware(['web'])->group(function () {
     Route::post('/recipe/add', [RecipeController::class, 'create']);
 });
 
+Route::get('/debug-csrf', function () {
+    return response()->json([
+        'csrf_token' => csrf_token(),
+        'session_id' => session()->getId()
+    ]);
+});
+
+Route::get('/get-csrf-token', function () {
+    return response()->json([
+        'csrf_token' => csrf_token()
+    ]);
+});
+
+
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

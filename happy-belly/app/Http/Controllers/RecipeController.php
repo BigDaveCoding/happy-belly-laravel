@@ -15,6 +15,7 @@ class RecipeController extends Controller
 
     public function create(Request $request)
     {
+        $userId = Auth::id();
 
         $validatedData = $request->validate([
             'recipe_name' => 'required|string|max:255',
@@ -30,10 +31,10 @@ class RecipeController extends Controller
         $recipe->image = $validatedData['recipe_image'] ?? null;
         $recipe->cooking_time = $validatedData['recipe_cooking_time'];
         $recipe->serves = $validatedData['recipe_serves'];
-        $recipe->user_id = Auth::id();
+        $recipe->user_id = $userId;
         // response
         $recipe->save();
 
-        return response()->json($recipe);
+        return redirect('/');
     }
 }
