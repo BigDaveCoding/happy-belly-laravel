@@ -1,28 +1,59 @@
 import NavBar from "@/components/navbar";
-import {useEffect, useState} from "react";
+import {FormEvent, useEffect, useState} from "react";
 
 export default function addRecipe() {
 
     const [csrfToken, setCsrfToken] = useState<string | null>(null);
 
-    useEffect(() => {
-        // Fetch CSRF token from the backend
-        const fetchCsrfToken = async () => {
-            const response = await fetch('/get-csrf-token');
-            const data = await response.json();
-            console.log(data)
-            console.log('this is the token: ', data.csrf_token)
-            setCsrfToken(data.csrf_token);
-        };
+    const [recipeData, setRecipeData] = useState<object>({
+        'recipe_name' : '',
+        'recipe_description' : '',
+        'recipe_image' : '',
+        'recipe_cooking_time' : '',
+        'recipe_serves' : 0
+    })
 
-        fetchCsrfToken();
+    async function getToken():Promise<void> {
+        const response = await fetch('/get-csrf-token')
+        const data = await response.json()
+        console.log(data)
+        setCsrfToken(data.csrf_token)
+    }
+
+    function inputRecipeData(e: FormEvent): void {
+        const { name, value } = e.target as HTMLInputElement;
+
+        setRecipeData(prevState => ({
+            ...prevState,
+            [name]: value,
+        }));
+    }
+
+    async function handleFormSubmit(e: FormEvent): Promise<void> {
+        e.preventDefault()
+        inputRecipeData(e)
+        await getToken();
+    }
+
+    useEffect(() => {
+        getToken()
     }, []);
+
+    console.log(csrfToken)
+    console.log(recipeData); // For debugging
+
 
     return (
         <>
             <NavBar userId={1} />
             <h1>Add Recipe</h1>
-            <form className="grid grid-cols-[1fr_2fr] gap-2 items-center mx-4" method="post" action="/recipe/add">
+            <form
+                // onChange={(e) => inputRecipeData(e)}
+                // onSubmit={(e) => handleFormSubmit(e)}
+                className="grid grid-cols-[1fr_2fr] gap-2 items-center mx-4"
+                method="post"
+                action="/recipe/add"
+            >
                 {csrfToken && <input type="hidden" name="_token" value={csrfToken} />}
                 <label htmlFor="recipe_name">Recipe Name :</label>
                 <input className="border-1 border-black inset-shadow-sm inset-shadow-slate-300 p-2 rounded" type="text" name="recipe_name" placeholder="Enchiladas" />
