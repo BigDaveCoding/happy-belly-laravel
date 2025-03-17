@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ingredient;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +35,23 @@ class RecipeController extends Controller
         $recipe->user_id = $userId;
         // response
         $recipe->save();
+
+        $ingredientNames = $request->input('ingredient_name');
+        $ingredientQuantity = $request->input('ingredient_quantity');
+        $ingredientUnit = $request->input('ingredient_unit');
+//        dd($ingredientNames, $ingredientQuantity, $ingredientUnit);
+
+        foreach ($ingredientNames as $index => $ingredientName) {
+
+            $ingredient = Ingredient::firstOrCreate(['name' => $ingredientName,
+                'food_group' => 'food_group',
+                'allergen' => 0]);
+
+            $recipe->ingredients()->attach($ingredient, [
+                'quantity' => $ingredientQuantity[$index],
+                'unit' => $ingredientUnit[$index]
+            ]);
+        }
 
         return redirect('/recipes');
     }

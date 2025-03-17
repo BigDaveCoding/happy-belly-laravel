@@ -21,13 +21,8 @@ class IngredientController extends Controller
             $ingredient->save();
 
         }
-//        $ingredient = new Ingredient();
-//
-//        $ingredient->name = $request->input('ingredient_name');
-//        $ingredient->food_group = 'food_group';
-//        $ingredient->allergen = 0;
-//
-//        $ingredient->save();
+
+        $ingredientQuantities = $request->input('ingredient_quantity');
 
     }
 }
