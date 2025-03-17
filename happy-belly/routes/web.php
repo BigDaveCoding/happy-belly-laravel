@@ -59,7 +59,7 @@ Route::get('/recipe/add', function() {
 
 
 //Route::middleware(['web'])->group(function () {
-//    Route::post('/recipe/add', [RecipeController::class, 'create', IngredientController::class, 'create']);
+//    Route::post('/recipe/add', [RecipeController::class, 'create']);
 //});
 
 Route::middleware(['web'])->group(function () {
@@ -68,7 +68,7 @@ Route::middleware(['web'])->group(function () {
         app(RecipeController::class)->create($request);
 
         // Create ingredients
-        app(IngredientController::class)->create($request);
+//        app(IngredientController::class)->create($request);
 
         //update pivot table
 
