@@ -23,6 +23,29 @@ export default function addRecipe() {
         'recipe_serves' : '0'
     })
 
+    const [ingredientData, setIngredientData] = useState([
+        {ingredient_name: '', ingredient_quantity: '', ingredient_unit: ''}
+    ])
+
+    const inputIngredientData = (index: number, e: FormEvent) => {
+        const { name, value } = e.target as HTMLInputElement;
+        const updatedIngredients = [...ingredientData];
+        updatedIngredients[index][name] = value;
+        setIngredientData(updatedIngredients);
+    };
+
+    const addIngredient = () => {
+        setIngredientData([
+            ...ingredientData,
+            {ingredient_name: '', ingredient_quantity: '', ingredient_unit: ''}
+        ])
+    }
+
+    const removeIngredient = () => {
+        const removedIngredientArray = ingredientData.slice(0, -1)
+        setIngredientData(removedIngredientArray)
+    }
+
     const [errors, setRecipeErrors] = useState<RecipeFormData>({
         'recipe_name' : 'Recipe Name must be longer than 4 characters',
         'recipe_description' : 'Must be between 50 and 5000 characters',
@@ -34,7 +57,7 @@ export default function addRecipe() {
     async function getToken() {
         const res = await fetch('/get-csrf-token');
         const data = await res.json();
-        console.log("Received token:", data.csrf_token);
+        // console.log("Received token:", data.csrf_token);
         setCsrfToken(data.csrf_token);
         return data.csrf_token;
     }
@@ -66,10 +89,11 @@ export default function addRecipe() {
 
     useEffect(() => {
         getToken()
-        console.log("form updating, getting token", csrfToken)
+        // console.log("form updating, getting token", csrfToken)
     }, [formErrorsExist])
 
-    console.log(recipeData)
+    // console.log(recipeData)
+    console.log("ingredient data:", ingredientData)
 
     return (
         <>
@@ -137,6 +161,49 @@ export default function addRecipe() {
 
                 <h2 className="col-span-2">Ingredients</h2>
 
+                {ingredientData.map((ingredient, index:number) => {
+                    console.log(index)
+                    console.log(ingredient)
+                    return (
+                        <>
+                            <div className="col-span-2" key={index + 1}>
+                                <div className="grid grid-cols-2 gap-2 border-1 border-black/50 rounded p-2">
+                                    <input
+                                        className="col-span-2 border border-black p-2 rounded inset-shadow-sm inset-shadow-slate-300"
+                                        type="text"
+                                        name="ingredient_name"
+                                        value={ingredient.ingredient_name}
+                                        placeholder="ingredient"
+                                        onChange={(e) => inputIngredientData(index ,e)}
+                                    />
+                                    <input
+                                        className="border border-black p-2 rounded inset-shadow-sm inset-shadow-slate-300"
+                                        type="number"
+                                        name="ingredient_quantity"
+                                        value={ingredient.ingredient_quantity}
+                                        placeholder="quantity"
+                                        onChange={(e) => inputIngredientData(index ,e)}
+                                    />
+                                    <input
+                                        className="border border-black p-2 rounded inset-shadow-sm inset-shadow-slate-300"
+                                        type="text"
+                                        name="ingredient_unit"
+                                        value={ingredient.ingredient_unit}
+                                        placeholder="unit"
+                                        onChange={(e) => inputIngredientData(index ,e)}
+                                    />
+                                </div>
+                            </div>
+                        </>
+                    )
+                })}
+
+                <button type="button" onClick={() => addIngredient()}>
+                    Add Ingredient
+                </button>
+                <button type="button" onClick={() => removeIngredient()}>
+                    Remove Ingredient
+                </button>
 
                 <input
                     className="col-span-2 border-1 p-2 w-8/12 bg-primary-color justify-self-center rounded inset-shadow-sm inset-shadow-black/30"
