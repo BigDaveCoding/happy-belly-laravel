@@ -39,13 +39,14 @@ class RecipeController extends Controller
         $ingredientNames = $request->input('ingredient_name');
         $ingredientQuantity = $request->input('ingredient_quantity');
         $ingredientUnit = $request->input('ingredient_unit');
-//        dd($ingredientNames, $ingredientQuantity, $ingredientUnit);
+        $ingredientAllergen = $request->input('ingredient_allergen');
+//        dd($ingredientNames, $ingredientQuantity, $ingredientUnit, $ingredientAllergen);
 
         foreach ($ingredientNames as $index => $ingredientName) {
 
             $ingredient = Ingredient::firstOrCreate(['name' => $ingredientName,
                 'food_group' => 'food_group',
-                'allergen' => 0]);
+                'allergen' => $ingredientAllergen[$index],]);
 
             $recipe->ingredients()->attach($ingredient, [
                 'quantity' => $ingredientQuantity[$index],

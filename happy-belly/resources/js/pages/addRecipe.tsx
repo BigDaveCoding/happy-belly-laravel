@@ -181,6 +181,16 @@ export default function addRecipe() {
                                         name="ingredient_unit[]"
                                         placeholder="unit"
                                     />
+                                    <label htmlFor="ingredient_allergen[]">
+                                        Allergen :
+                                    </label>
+                                    <select
+                                        className="border-1 rounded"
+                                        name="ingredient_allergen[]"
+                                    >
+                                        <option value="0" defaultChecked>No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
                                 </div>
                             </div>
                         </>
