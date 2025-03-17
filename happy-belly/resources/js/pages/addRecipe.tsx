@@ -13,11 +13,12 @@ export default function addRecipe() {
         'recipe_serves' : 0
     })
 
-    async function getToken():Promise<void> {
-        const response = await fetch('/get-csrf-token')
-        const data = await response.json()
-        console.log(data)
-        setCsrfToken(data.csrf_token)
+    async function getToken() {
+        const res = await fetch('/get-csrf-token');
+        const data = await res.json();
+        console.log("Received token:", data.csrf_token);
+        setCsrfToken(data.csrf_token);
+        return data.csrf_token;
     }
 
     function inputRecipeData(e: FormEvent): void {
@@ -29,27 +30,29 @@ export default function addRecipe() {
         }));
     }
 
-    async function handleFormSubmit(e: FormEvent): Promise<void> {
+    async function handleFormSubmit(e: FormEvent) {
         e.preventDefault()
         inputRecipeData(e)
-        await getToken();
+        const token = await getToken()
+        setCsrfToken(token)
+
+        console.log("token in handle submit form",token)
+        console.log("recipe data:",recipeData)
+
+
     }
 
     useEffect(() => {
         getToken()
-    }, []);
-
-    console.log(csrfToken)
-    console.log(recipeData); // For debugging
-
+    }, [])
 
     return (
         <>
             <NavBar userId={1} />
             <h1>Add Recipe</h1>
             <form
-                // onChange={(e) => inputRecipeData(e)}
-                // onSubmit={(e) => handleFormSubmit(e)}
+                onChange={(e) => inputRecipeData(e)}
+                onSubmit={(e) => handleFormSubmit(e)}
                 className="grid grid-cols-[1fr_2fr] gap-2 items-center mx-4"
                 method="post"
                 action="/recipe/add"

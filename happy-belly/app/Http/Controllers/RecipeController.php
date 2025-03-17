@@ -35,6 +35,6 @@ class RecipeController extends Controller
         // response
         $recipe->save();
 
-        return redirect('/');
+        return redirect('/recipes');
     }
 }
