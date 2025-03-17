@@ -41,7 +41,13 @@ export default function addRecipe() {
 
     function inputRecipeData(e: FormEvent): void {
         const { name, value } = e.target as HTMLInputElement;
-
+        if(name == 'recipe_image') {
+            setRecipeData(prevState => ({
+                ...prevState,
+                [name]: 'https://placehold.co/600x400',
+            }));
+            return
+        }
         setRecipeData(prevState => ({
             ...prevState,
             [name]: value,
@@ -63,7 +69,7 @@ export default function addRecipe() {
         console.log("form updating, getting token", csrfToken)
     }, [formErrorsExist])
 
-    // console.log(recipeData)
+    console.log(recipeData)
 
     return (
         <>
@@ -99,14 +105,13 @@ export default function addRecipe() {
                     <p className="col-span-2 text-md text-red-500">{errors.recipe_description}</p>
                 }
 
-
-                <label htmlFor="recipe_image">Image URL :</label>
+                <label className={`col-span-2`} htmlFor="recipe_image">Image:</label>
                 <input
-                    className="border-1 border-black inset-shadow-sm inset-shadow-slate-300 p-2 rounded"
-                    type="text"
+                    className="border-1 border-black inset-shadow-sm inset-shadow-slate-300 p-2 rounded col-span-2"
+                    type="file"
                     name="recipe_image"
-                    placeholder="www.image.com"
                 />
+                {recipeData.recipe_image.length > 0 && <img className="col-span-2" src={recipeData.recipe_image} alt='' />}
 
                 <label htmlFor="recipe_cooking_time">Cooking Time :<br/><i>(Minutes)</i></label>
                 <input
@@ -129,6 +134,9 @@ export default function addRecipe() {
                     (isNaN(parseInt(recipeData.recipe_serves)) || parseInt(recipeData.recipe_serves) <= 0) &&
                     <p className="col-span-2 text-md text-red-500">{errors.recipe_serves}</p>
                 }
+
+                <h2 className="col-span-2">Ingredients</h2>
+
 
                 <input
                     className="col-span-2 border-1 p-2 w-8/12 bg-primary-color justify-self-center rounded inset-shadow-sm inset-shadow-black/30"
