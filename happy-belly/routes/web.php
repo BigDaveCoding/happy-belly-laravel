@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\RecipeController;
 use App\Models\Recipe;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -50,9 +52,34 @@ Route::get('/recipe/add', function() {
     return Inertia::render('addRecipe');
 });
 
+
+
+
+
+
+
+//Route::middleware(['web'])->group(function () {
+//    Route::post('/recipe/add', [RecipeController::class, 'create', IngredientController::class, 'create']);
+//});
+
 Route::middleware(['web'])->group(function () {
-    Route::post('/recipe/add', [RecipeController::class, 'create']);
+    Route::post('/recipe/add', function (Request $request) {
+        // Create recipe
+        app(RecipeController::class)->create($request);
+
+        // Create ingredients
+        app(IngredientController::class)->create($request);
+
+        //update pivot table
+
+        return response()->json(['message' => 'Recipe and ingredients created successfully.']);
+    });
 });
+
+
+
+
+
 
 Route::get('/debug-csrf', function () {
     return response()->json([
