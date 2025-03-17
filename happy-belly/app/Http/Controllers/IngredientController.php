@@ -9,12 +9,25 @@ class IngredientController extends Controller
 {
     public function create(Request $request)
     {
-        $ingredient = new Ingredient();
+        $ingredientNames = $request->input('ingredient_name');
+        foreach ($ingredientNames as $ingredientName) {
 
-        $ingredient->name = $request->input('ingredient_name');
-        $ingredient->food_group = 'food_group';
-        $ingredient->allergen = 0;
-        $ingredient->save();
+            $ingredient = new Ingredient();
+
+            $ingredient->name = $ingredientName;
+            $ingredient->food_group = 'food_group';
+            $ingredient->allergen = 0;
+
+            $ingredient->save();
+
+        }
+//        $ingredient = new Ingredient();
+//
+//        $ingredient->name = $request->input('ingredient_name');
+//        $ingredient->food_group = 'food_group';
+//        $ingredient->allergen = 0;
+//
+//        $ingredient->save();
 
     }
 }

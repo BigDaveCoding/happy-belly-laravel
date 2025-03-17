@@ -27,13 +27,6 @@ export default function addRecipe() {
         {ingredient_name: '', ingredient_quantity: '', ingredient_unit: ''}
     ])
 
-    const inputIngredientData = (index: number, e: FormEvent) => {
-        const { name, value } = e.target as HTMLInputElement;
-        const updatedIngredients = [...ingredientData];
-        updatedIngredients[index][name] = value;
-        setIngredientData(updatedIngredients);
-    };
-
     const addIngredient = () => {
         setIngredientData([
             ...ingredientData,
@@ -93,7 +86,7 @@ export default function addRecipe() {
     }, [formErrorsExist])
 
     // console.log(recipeData)
-    console.log("ingredient data:", ingredientData)
+    // console.log("ingredient data:", ingredientData)
 
     return (
         <>
@@ -166,8 +159,6 @@ export default function addRecipe() {
                 <h2 className="col-span-2">Ingredients</h2>
 
                 {ingredientData.map((ingredient, index: number) => {
-                    console.log(index);
-                    console.log(ingredient);
                     return (
                         <>
                             <div className="col-span-2" key={index + 1}>
@@ -175,26 +166,20 @@ export default function addRecipe() {
                                     <input
                                         className="col-span-2 rounded border border-black p-2 inset-shadow-sm inset-shadow-slate-300"
                                         type="text"
-                                        name="ingredient_name"
-                                        value={ingredient.ingredient_name}
+                                        name="ingredient_name[]"
                                         placeholder="ingredient"
-                                        onChange={(e) => inputIngredientData(index, e)}
                                     />
                                     <input
                                         className="rounded border border-black p-2 inset-shadow-sm inset-shadow-slate-300"
                                         type="number"
-                                        name="ingredient_quantity"
-                                        value={ingredient.ingredient_quantity}
+                                        name="ingredient_quantity[]"
                                         placeholder="quantity"
-                                        onChange={(e) => inputIngredientData(index, e)}
                                     />
                                     <input
                                         className="rounded border border-black p-2 inset-shadow-sm inset-shadow-slate-300"
                                         type="text"
-                                        name="ingredient_unit"
-                                        value={ingredient.ingredient_unit}
+                                        name="ingredient_unit[]"
                                         placeholder="unit"
-                                        onChange={(e) => inputIngredientData(index, e)}
                                     />
                                 </div>
                             </div>
