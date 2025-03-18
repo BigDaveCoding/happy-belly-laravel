@@ -88,4 +88,5 @@ export interface IngredientFormData {
     ingredient_name: string;
     ingredient_quantity: string;
     ingredient_unit: string;
+    ingredient_allergen: number;
 }

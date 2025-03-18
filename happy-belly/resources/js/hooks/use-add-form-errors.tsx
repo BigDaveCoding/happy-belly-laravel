@@ -17,7 +17,8 @@ export function useAddFormErrors({recipeData}:{recipeData: RecipeFormData}) {
         if (recipeData.recipe_name.length < 4 ||
             (recipeData.recipe_description.length < 10 || recipeData.recipe_description.length > 500) ||
             (isNaN(parseInt(recipeData.recipe_cooking_time)) || parseInt(recipeData.recipe_cooking_time) <= 0) ||
-            (isNaN(parseInt(recipeData.recipe_serves)) || parseInt(recipeData.recipe_serves) <= 0)){
+            (isNaN(parseInt(recipeData.recipe_serves)) || parseInt(recipeData.recipe_serves) <= 0)
+        ){
             e.preventDefault()
             setFormErrors(true)
         }

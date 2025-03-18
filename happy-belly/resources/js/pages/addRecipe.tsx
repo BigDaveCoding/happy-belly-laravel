@@ -11,7 +11,7 @@ export default function AddRecipe() {
 
     const {recipeData, inputRecipeData} = useRecipeData();
 
-    const {ingredientData, addIngredient, removeIngredient} = useIngredientFormData();
+    const {ingredientData, addIngredient, removeIngredient, updateIngredientData} = useIngredientFormData();
 
     const {formErrors, errors, formErrorsExist} = useAddFormErrors({recipeData})
 
@@ -102,18 +102,21 @@ export default function AddRecipe() {
                                         type="text"
                                         name="ingredient_name[]"
                                         placeholder="ingredient"
+                                        onChange={(e) => {updateIngredientData(e, index)}}
                                     />
                                     <input
                                         className="rounded border border-black p-2 inset-shadow-sm inset-shadow-slate-300"
                                         type="number"
                                         name="ingredient_quantity[]"
                                         placeholder="quantity"
+                                        onChange={(e) => {updateIngredientData(e, index)}}
                                     />
                                     <input
                                         className="rounded border border-black p-2 inset-shadow-sm inset-shadow-slate-300"
                                         type="text"
                                         name="ingredient_unit[]"
                                         placeholder="unit"
+                                        onChange={(e) => {updateIngredientData(e, index)}}
                                     />
                                     <label htmlFor="ingredient_allergen[]">
                                         Allergen :
@@ -121,6 +124,7 @@ export default function AddRecipe() {
                                     <select
                                         className="border-1 rounded"
                                         name="ingredient_allergen[]"
+                                        onChange={(e) => {updateIngredientData(e, index)}}
                                     >
                                         <option value="0" defaultChecked>No</option>
                                         <option value="1">Yes</option>
