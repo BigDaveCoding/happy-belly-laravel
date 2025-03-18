@@ -1,7 +1,7 @@
 import {IngredientFormData} from "@/types";
 import {useState} from "react";
 
-export function UseIngredients() {
+export function useIngredientFormData() {
     const [ingredientData, setIngredientData] = useState<IngredientFormData[]>([
         {ingredient_name: '', ingredient_quantity: '', ingredient_unit: ''}
     ])

@@ -1,15 +1,8 @@
 import NavBar from "@/components/navbar";
 import {FormEvent, useEffect, useState} from "react";
 import GetCsrfToken from "@/functions/get-csrf-token";
-import {UseIngredients} from "@/hooks/use-ingredients";
-
-interface RecipeFormData {
-    recipe_name: string;
-    recipe_description: string;
-    recipe_image: string;
-    recipe_cooking_time: string;
-    recipe_serves: string;
-}
+import {useIngredientFormData} from "@/hooks/use-ingredient-form-data";
+import {useRecipeData} from "@/hooks/use-recipe-data";
 
 export default function AddRecipe() {
 
@@ -17,15 +10,9 @@ export default function AddRecipe() {
 
     const [formErrors, setFormErrors] = useState<boolean>(false);
 
-    const [recipeData, setRecipeData] = useState<RecipeFormData>({
-        'recipe_name' : '',
-        'recipe_description' : '',
-        'recipe_image' : '',
-        'recipe_cooking_time' : '',
-        'recipe_serves' : '0'
-    })
+    const {recipeData, inputRecipeData} = useRecipeData();
 
-    const {ingredientData, addIngredient, removeIngredient} = UseIngredients();
+    const {ingredientData, addIngredient, removeIngredient} = useIngredientFormData();
 
     const errors = {
         'recipe_name' : 'Recipe Name must be longer than 4 characters',
@@ -33,21 +20,6 @@ export default function AddRecipe() {
         'recipe_image' : '',
         'recipe_cooking_time' : 'Must be a number & above 0',
         'recipe_serves' : 'must be a number & above 0'
-    }
-
-    function inputRecipeData(e: FormEvent): void {
-        const { name, value } = e.target as HTMLInputElement;
-        if(name == 'recipe_image') {
-            setRecipeData(prevState => ({
-                ...prevState,
-                [name]: 'https://placehold.co/600x400',
-            }));
-            return
-        }
-        setRecipeData(prevState => ({
-            ...prevState,
-            [name]: value,
-        }));
     }
 
     function formErrorsExist(e: FormEvent) {
