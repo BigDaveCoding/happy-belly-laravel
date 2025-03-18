@@ -1,36 +1,19 @@
 import NavBar from "@/components/navbar";
-import {FormEvent, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import GetCsrfToken from "@/functions/get-csrf-token";
 import {useIngredientFormData} from "@/hooks/use-ingredient-form-data";
 import {useRecipeData} from "@/hooks/use-recipe-data";
+import {useAddFormErrors} from "@/hooks/use-add-form-errors";
 
 export default function AddRecipe() {
 
     const [csrfToken, setCsrfToken] = useState<string | null>(null);
 
-    const [formErrors, setFormErrors] = useState<boolean>(false);
-
     const {recipeData, inputRecipeData} = useRecipeData();
 
     const {ingredientData, addIngredient, removeIngredient} = useIngredientFormData();
 
-    const errors = {
-        'recipe_name' : 'Recipe Name must be longer than 4 characters',
-        'recipe_description' : 'Must be between 10 and 5000 characters',
-        'recipe_image' : '',
-        'recipe_cooking_time' : 'Must be a number & above 0',
-        'recipe_serves' : 'must be a number & above 0'
-    }
-
-    function formErrorsExist(e: FormEvent) {
-        if (recipeData.recipe_name.length < 4 ||
-            (recipeData.recipe_description.length < 10 || recipeData.recipe_description.length > 500) ||
-            (isNaN(parseInt(recipeData.recipe_cooking_time)) || parseInt(recipeData.recipe_cooking_time) <= 0) ||
-            (isNaN(parseInt(recipeData.recipe_serves)) || parseInt(recipeData.recipe_serves) <= 0)){
-            e.preventDefault()
-            setFormErrors(true)
-        }
-    }
+    const {formErrors, errors, formErrorsExist} = useAddFormErrors({recipeData})
 
     useEffect(() => {
         async function assignToken() {
