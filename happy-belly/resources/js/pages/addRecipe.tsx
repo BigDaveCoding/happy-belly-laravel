@@ -1,5 +1,6 @@
 import NavBar from "@/components/navbar";
 import {FormEvent, useEffect, useState} from "react";
+import GetCsrfToken from "@/functions/get-csrf-token";
 
 interface RecipeFormData {
     recipe_name: string;
@@ -9,7 +10,7 @@ interface RecipeFormData {
     recipe_serves: string;
 }
 
-export default function addRecipe() {
+export default function AddRecipe() {
 
     const [csrfToken, setCsrfToken] = useState<string | null>(null);
 
@@ -81,8 +82,16 @@ export default function addRecipe() {
     }
 
     useEffect(() => {
-        getToken()
-        // console.log("form updating, getting token", csrfToken)
+        async function assignToken() {
+            const token = await GetCsrfToken()
+            setCsrfToken(token)
+        }
+        assignToken()
+    },[formErrorsExist])
+
+    useEffect(async ():void => {
+        const token = GetCsrfToken()
+        setCsrfToken(await token)
     }, [formErrorsExist])
 
     // console.log(recipeData)
