@@ -21,7 +21,6 @@ class RecipeController extends Controller
         $validatedData = $request->validate([
             'recipe_name' => 'required|string|max:255',
             'recipe_description' => 'required|string',
-//            'recipe_image' => 'nullable|url',
             'recipe_cooking_time' => 'required|integer|min:1',
             'recipe_serves' => 'required|integer|min:1',
         ]);
@@ -33,14 +32,12 @@ class RecipeController extends Controller
         $recipe->cooking_time = $validatedData['recipe_cooking_time'];
         $recipe->serves = $validatedData['recipe_serves'];
         $recipe->user_id = $userId;
-        // response
         $recipe->save();
 
         $ingredientNames = $request->input('ingredient_name');
         $ingredientQuantity = $request->input('ingredient_quantity');
         $ingredientUnit = $request->input('ingredient_unit');
         $ingredientAllergen = $request->input('ingredient_allergen');
-//        dd($ingredientNames, $ingredientQuantity, $ingredientUnit, $ingredientAllergen);
 
         foreach ($ingredientNames as $index => $ingredientName) {
 
