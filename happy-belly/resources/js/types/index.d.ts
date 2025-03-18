@@ -76,3 +76,9 @@ export interface SingleRecipeIngredientsInstructions {
     ingredients: Ingredient[]
     cooking_instructions: cookingInstructions[]
 }
+
+export interface IngredientFormData {
+    ingredient_name: string;
+    ingredient_quantity: string;
+    ingredient_unit: string;
+}

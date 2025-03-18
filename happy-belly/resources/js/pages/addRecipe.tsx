@@ -1,6 +1,7 @@
 import NavBar from "@/components/navbar";
 import {FormEvent, useEffect, useState} from "react";
 import GetCsrfToken from "@/functions/get-csrf-token";
+import {UseIngredients} from "@/hooks/use-ingredients";
 
 interface RecipeFormData {
     recipe_name: string;
@@ -24,36 +25,14 @@ export default function AddRecipe() {
         'recipe_serves' : '0'
     })
 
-    const [ingredientData, setIngredientData] = useState([
-        {ingredient_name: '', ingredient_quantity: '', ingredient_unit: ''}
-    ])
+    const {ingredientData, addIngredient, removeIngredient} = UseIngredients();
 
-    const addIngredient = () => {
-        setIngredientData([
-            ...ingredientData,
-            {ingredient_name: '', ingredient_quantity: '', ingredient_unit: ''}
-        ])
-    }
-
-    const removeIngredient = () => {
-        const removedIngredientArray = ingredientData.slice(0, -1)
-        setIngredientData(removedIngredientArray)
-    }
-
-    const [errors, setRecipeErrors] = useState<RecipeFormData>({
+    const errors = {
         'recipe_name' : 'Recipe Name must be longer than 4 characters',
-        'recipe_description' : 'Must be between 50 and 5000 characters',
+        'recipe_description' : 'Must be between 10 and 5000 characters',
         'recipe_image' : '',
         'recipe_cooking_time' : 'Must be a number & above 0',
         'recipe_serves' : 'must be a number & above 0'
-    })
-
-    async function getToken() {
-        const res = await fetch('/get-csrf-token');
-        const data = await res.json();
-        // console.log("Received token:", data.csrf_token);
-        setCsrfToken(data.csrf_token);
-        return data.csrf_token;
     }
 
     function inputRecipeData(e: FormEvent): void {
@@ -73,7 +52,7 @@ export default function AddRecipe() {
 
     function formErrorsExist(e: FormEvent) {
         if (recipeData.recipe_name.length < 4 ||
-            (recipeData.recipe_description.length < 50 || recipeData.recipe_description.length > 500) ||
+            (recipeData.recipe_description.length < 10 || recipeData.recipe_description.length > 500) ||
             (isNaN(parseInt(recipeData.recipe_cooking_time)) || parseInt(recipeData.recipe_cooking_time) <= 0) ||
             (isNaN(parseInt(recipeData.recipe_serves)) || parseInt(recipeData.recipe_serves) <= 0)){
             e.preventDefault()
@@ -83,19 +62,10 @@ export default function AddRecipe() {
 
     useEffect(() => {
         async function assignToken() {
-            const token = await GetCsrfToken()
-            setCsrfToken(token)
+            setCsrfToken(await GetCsrfToken())
         }
         assignToken()
-    },[formErrorsExist])
-
-    useEffect(async ():void => {
-        const token = GetCsrfToken()
-        setCsrfToken(await token)
-    }, [formErrorsExist])
-
-    // console.log(recipeData)
-    // console.log("ingredient data:", ingredientData)
+    },[])
 
     return (
         <>
@@ -124,7 +94,7 @@ export default function AddRecipe() {
                     name="recipe_description"
                     placeholder="How would you describe your recipe?"
                 ></textarea>
-                {formErrors && (recipeData.recipe_description.length < 50 || recipeData.recipe_description.length > 5000) && (
+                {formErrors && (recipeData.recipe_description.length < 10 || recipeData.recipe_description.length > 5000) && (
                     <p className="text-md col-span-2 text-red-500">{errors.recipe_description}</p>
                 )}
 
