@@ -5,6 +5,8 @@ import {useIngredientFormData} from "@/hooks/use-ingredient-form-data";
 import {useRecipeData} from "@/hooks/use-recipe-data";
 import {useAddFormErrors} from "@/hooks/use-add-form-errors";
 import ErrorMessage from "@/components/error-message";
+import {IngredientFormData} from "@/types";
+import {useCookingInstructionFormData} from "@/hooks/use-cooking-instruction-form-data";
 
 export default function AddRecipe() {
 
@@ -13,6 +15,8 @@ export default function AddRecipe() {
     const {recipeData, inputRecipeData} = useRecipeData();
 
     const {ingredientData, addIngredient, removeIngredient, updateIngredientData} = useIngredientFormData();
+
+    const {cookingInstructions, addCookingInstruction, removeCookingInstruction, updateCookingInstruction} = useCookingInstructionFormData()
 
     const {formErrors, errors, formErrorsExist} = useAddFormErrors({recipeData, ingredientData})
 
@@ -150,10 +154,50 @@ export default function AddRecipe() {
                 </button>
 
                 {/*remove ingredient button*/}
-                { ingredientData.length > 1 &&
-                    <button className="" type="button" onClick={() => removeIngredient()}>
+                { ingredientData.length > 1 ? (
+                    <button
+                        className=""
+                        type="button"
+                        onClick={() => removeIngredient()}>
                         <i className="fa-solid fa-minus"></i>
                     </button>
+                    ) : (
+                    <span></span>
+                    )
+                }
+
+                {cookingInstructions.map((instruction, index) => {
+                    return (
+                        <>
+                            <div className="col-span-2 flex flex-col gap-2 font-main-fredoka" key={index}>
+                                <p>{index + 1} .</p>
+                                <textarea
+                                    className="w-full border-1 border-black p-2 rounded"
+                                    name="cooking_instruction[]"
+                                    placeholder="What happens now?!"
+                                    onChange={(e) => updateCookingInstruction(e, index)}
+                                >
+                                </textarea>
+
+                            </div>
+                        </>
+                    )
+                })}
+
+                <button className="" type="button" onClick={() => addCookingInstruction()}>
+                    <i className="fa-solid fa-plus"></i>
+                </button>
+
+                { cookingInstructions.length > 1 ? (
+                    <button
+                        className=""
+                        type="button"
+                        onClick={() => removeCookingInstruction()}>
+                        <i className="fa-solid fa-minus"></i>
+                    </button>
+                ) : (
+                    <span></span>
+                )
                 }
 
                 <input
