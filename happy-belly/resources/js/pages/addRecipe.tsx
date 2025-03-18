@@ -13,7 +13,7 @@ export default function AddRecipe() {
 
     const {ingredientData, addIngredient, removeIngredient, updateIngredientData} = useIngredientFormData();
 
-    const {formErrors, errors, formErrorsExist} = useAddFormErrors({recipeData})
+    const {formErrors, errors, formErrorsExist} = useAddFormErrors({recipeData, ingredientData})
 
     useEffect(() => {
         async function assignToken() {
@@ -104,6 +104,10 @@ export default function AddRecipe() {
                                         placeholder="ingredient"
                                         onChange={(e) => {updateIngredientData(e, index)}}
                                     />
+                                    {formErrors &&
+                                        ingredient.ingredient_name.length <= 0 &&
+                                        <p className="text-md col-span-2 text-red-500">{errors.ingredient_name}</p>
+                                    }
                                     <input
                                         className="rounded border border-black p-2 inset-shadow-sm inset-shadow-slate-300"
                                         type="number"
@@ -118,6 +122,10 @@ export default function AddRecipe() {
                                         placeholder="unit"
                                         onChange={(e) => {updateIngredientData(e, index)}}
                                     />
+                                    {formErrors &&
+                                        (ingredient.ingredient_quantity.length === 0 || isNaN(parseInt(ingredient.ingredient_quantity)) || parseInt(ingredient.ingredient_quantity) <= 0) &&
+                                        <p className="text-md col-span-2 text-red-500">{errors.ingredient_quantity}</p>
+                                    }
                                     <label htmlFor="ingredient_allergen[]">
                                         Allergen :
                                     </label>
