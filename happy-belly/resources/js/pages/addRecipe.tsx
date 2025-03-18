@@ -4,6 +4,7 @@ import GetCsrfToken from "@/functions/get-csrf-token";
 import {useIngredientFormData} from "@/hooks/use-ingredient-form-data";
 import {useRecipeData} from "@/hooks/use-recipe-data";
 import {useAddFormErrors} from "@/hooks/use-add-form-errors";
+import ErrorMessage from "@/components/error-message";
 
 export default function AddRecipe() {
 
@@ -41,7 +42,7 @@ export default function AddRecipe() {
                     name="recipe_name"
                     placeholder="Enchiladas"
                 />
-                {formErrors && recipeData.recipe_name.length < 4 && <p className="text-md col-span-2 text-red-500">{errors.recipe_name}</p>}
+                {formErrors && recipeData.recipe_name.length < 4 && <ErrorMessage errorMessage={errors.recipe_name} extraCss={"col-span-2"} />}
 
                 <label htmlFor="recipe_description">Description :</label>
                 <textarea
@@ -50,7 +51,7 @@ export default function AddRecipe() {
                     placeholder="How would you describe your recipe?"
                 ></textarea>
                 {formErrors && (recipeData.recipe_description.length < 10 || recipeData.recipe_description.length > 5000) && (
-                    <p className="text-md col-span-2 text-red-500">{errors.recipe_description}</p>
+                    <ErrorMessage errorMessage={errors.recipe_description} extraCss={"col-span-2"} />
                 )}
 
                 <label className={`col-span-2`} htmlFor="recipe_image">
@@ -74,7 +75,7 @@ export default function AddRecipe() {
                     placeholder="30"
                 />
                 {formErrors && (isNaN(parseInt(recipeData.recipe_cooking_time)) || parseInt(recipeData.recipe_cooking_time) <= 0) && (
-                    <p className="text-md col-span-2 text-red-500">{errors.recipe_cooking_time}</p>
+                    <ErrorMessage errorMessage={errors.recipe_cooking_time} extraCss={"col-span-2"} />
                 )}
 
                 <label htmlFor="recipe_serves">Serves :</label>
@@ -85,7 +86,7 @@ export default function AddRecipe() {
                     placeholder="4"
                 />
                 {formErrors && (isNaN(parseInt(recipeData.recipe_serves)) || parseInt(recipeData.recipe_serves) <= 0) && (
-                    <p className="text-md col-span-2 text-red-500">{errors.recipe_serves}</p>
+                    <ErrorMessage errorMessage={errors.recipe_serves} extraCss={"col-span-2"} />
                 )}
 
                 <hr className="col-span-2 border-black my-2" />
@@ -106,7 +107,7 @@ export default function AddRecipe() {
                                     />
                                     {formErrors &&
                                         ingredient.ingredient_name.length <= 0 &&
-                                        <p className="text-md col-span-2 text-red-500">{errors.ingredient_name}</p>
+                                        <ErrorMessage errorMessage={errors.ingredient_name} extraCss={"col-span-2"} />
                                     }
                                     <input
                                         className="rounded border border-black p-2 inset-shadow-sm inset-shadow-slate-300"
@@ -124,7 +125,7 @@ export default function AddRecipe() {
                                     />
                                     {formErrors &&
                                         (ingredient.ingredient_quantity.length === 0 || isNaN(parseInt(ingredient.ingredient_quantity)) || parseInt(ingredient.ingredient_quantity) <= 0) &&
-                                        <p className="text-md col-span-2 text-red-500">{errors.ingredient_quantity}</p>
+                                        <ErrorMessage errorMessage={errors.ingredient_quantity} extraCss={"col-span-2"} />
                                     }
                                     <label htmlFor="ingredient_allergen[]">
                                         Allergen :

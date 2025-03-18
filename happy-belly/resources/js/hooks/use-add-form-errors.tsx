@@ -10,7 +10,7 @@ export function useAddFormErrors({recipeData, ingredientData}:{recipeData: Recip
         'recipe_description' : 'Must be between 10 and 5000 characters',
         'recipe_image' : '',
         'recipe_cooking_time' : 'Must be a number & above 0',
-        'recipe_serves' : 'must be a number & above 0',
+        'recipe_serves' : 'Must be a number & above 0',
         'ingredient_name' : 'Must have an ingredient',
         'ingredient_quantity' : 'Must be a number & above 0'
     }
