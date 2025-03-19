@@ -31,5 +31,16 @@ export function useIngredientFormData() {
         setIngredientData(removedIngredientArray)
     }
 
-    return {ingredientData, addIngredient, removeIngredient, updateIngredientData}
+    function initIngredientData(ingredients): void {
+        const input = [
+            ingredients.map(ingredient => {
+                return {ingredient_name: ingredient.name, ingredient_quantity: ingredient.pivot.quantity, ingredient_unit: ingredient.pivot.unit ?? null, ingredient_allergen : ingredient.allergen}
+            })
+        ]
+        setIngredientData(input)
+    }
+
+
+
+    return {ingredientData, addIngredient, removeIngredient, updateIngredientData, initIngredientData}
 }

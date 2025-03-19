@@ -73,6 +73,7 @@ export interface SingleRecipeIngredientsInstructions {
     description: string;
     image: string;
     cooking_time: string;
+    serves: number;
     ingredients: Ingredient[]
     cooking_instructions: cookingInstructions[]
 }
@@ -82,7 +83,7 @@ export interface RecipeFormData {
     recipe_description: string;
     recipe_image: string;
     recipe_cooking_time: string;
-    recipe_serves: string;
+    recipe_serves: number;
 }
 export interface IngredientFormData {
     ingredient_name: string;

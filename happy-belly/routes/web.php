@@ -62,6 +62,15 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::post('/recipe/add', [RecipeController::class, 'create']);
 });
 
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::get('/recipe/edit/{id}', function ($id) {
+        return Inertia::render('editRecipe', [
+            'userId' => Auth::id(),
+            'recipe' => Recipe::with('ingredients', 'cookingInstructions')->findOrFail($id)
+        ]);
+    });
+});
+
 
 
 Route::get('/debug-csrf', function () {
