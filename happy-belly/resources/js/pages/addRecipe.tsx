@@ -29,7 +29,7 @@ export default function AddRecipe({userId} : {userId : number}) {
         assignToken()
     },[])
 
-    console.log(ingredientData)
+    // console.log(ingredientData)
 
     return (
         <>
@@ -110,15 +110,6 @@ export default function AddRecipe({userId} : {userId : number}) {
                 <FormAddRecipeIngredientInput ingredientData={ingredientData} formErrors={formErrors} errors={errors} updateIngredientData={updateIngredientData} addIngredient={addIngredient} removeIngredient={removeIngredient} />
 
                 <FormPlusMinusButton addRemoveFunction={addIngredient} plusOrMinus={true} />
-
-                {/*/!*ingredient form buttons*!/*/}
-                {/*<FormPlusMinusButton addRemoveFunction={addIngredient} plusOrMinus={true} />*/}
-                {/*{ ingredientData.length > 1 ? (*/}
-                {/*        <FormPlusMinusButton addRemoveFunction={removeIngredient} plusOrMinus={false} />*/}
-                {/*    ) : (*/}
-                {/*        <span></span>*/}
-                {/*    )*/}
-                {/*}*/}
 
                 <h2 className="col-span-2">Cooking Instructions</h2>
 

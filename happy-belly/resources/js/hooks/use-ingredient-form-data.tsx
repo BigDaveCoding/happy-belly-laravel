@@ -1,4 +1,4 @@
-import {IngredientFormData} from "@/types";
+import {Ingredient, IngredientFormData, Recipe} from "@/types";
 import {FormEvent, useState} from "react";
 
 export function useIngredientFormData() {
@@ -32,10 +32,14 @@ export function useIngredientFormData() {
         );
     }
 
-    function initIngredientData(ingredients): void {
-        const input = [
-            ingredients.map(ingredient => {
-                return {ingredient_name: ingredient.name, ingredient_quantity: ingredient.pivot.quantity, ingredient_unit: ingredient.pivot.unit ?? null, ingredient_allergen : ingredient.allergen}
+    function initIngredientData(ingredients : IngredientFormData[]): void {
+        const input= [
+            ingredients.map((ingredient:IngredientFormData) => {
+                return {
+                    ingredient_name: ingredient.ingredient_name,
+                    ingredient_quantity: ingredient.ingredient_quantity,
+                    ingredient_unit: ingredient.ingredient_unit ?? null,
+                    ingredient_allergen : ingredient.ingredient_allergen}
             })
         ]
         setIngredientData(input)
