@@ -17,41 +17,38 @@ export function useAddFormErrors({recipeData, ingredientData, cookingInstruction
     }
 
     function formErrorsExist(e: FormEvent) {
-        formRecipeErrorsExist(e)
-        formIngredientErrorsExist(e)
-        formCookingInstructionErrorsExist(e)
-    }
-
-    function formRecipeErrorsExist(e: FormEvent) {
-        if (recipeData.recipe_name.length < 4 ||
-            (recipeData.recipe_description.length < 10 || recipeData.recipe_description.length > 500) ||
-            (isNaN(parseInt(recipeData.recipe_cooking_time)) || parseInt(recipeData.recipe_cooking_time) <= 0) ||
-            (isNaN(parseInt(recipeData.recipe_serves)) || parseInt(recipeData.recipe_serves) <= 0)
-        ){
+        if(formRecipeErrorsExist() || formIngredientErrorsExist() || formCookingInstructionErrorsExist()){
             e.preventDefault()
             setFormErrors(true)
         }
     }
 
-    function formIngredientErrorsExist(e: FormEvent) {
+    function formRecipeErrorsExist(): boolean {
+        return recipeData.recipe_name.length < 4 ||
+            (recipeData.recipe_description.length < 10 || recipeData.recipe_description.length > 500) ||
+            (isNaN(parseInt(recipeData.recipe_cooking_time)) || parseInt(recipeData.recipe_cooking_time) <= 0) ||
+            (isNaN(parseInt(recipeData.recipe_serves)) || parseInt(recipeData.recipe_serves) <= 0);
+    }
+
+    function formIngredientErrorsExist() : boolean {
         ingredientData.forEach(ingredient => {
             if(ingredient.ingredient_name.length === 0 ||
                 (ingredient.ingredient_quantity.length === 0 || isNaN(parseInt(ingredient.ingredient_quantity)) || parseInt(ingredient.ingredient_quantity) <= 0)
             ){
-                e.preventDefault()
-                setFormErrors(true)
+                return true;
             }
         })
+        return false;
     }
 
-    function formCookingInstructionErrorsExist(e: FormEvent) : void {
+    function formCookingInstructionErrorsExist() : boolean {
         cookingInstructions.forEach(instruction => {
             if (instruction.cooking_instruction.length <= 0
             ) {
-                e.preventDefault()
-                setFormErrors(true)
+                return true
             }
         })
+        return false
     }
 
     return {formErrors, errors, formErrorsExist}
