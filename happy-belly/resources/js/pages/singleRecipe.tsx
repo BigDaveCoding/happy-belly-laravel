@@ -18,6 +18,17 @@ export default function SingleRecipe({userId, recipe }: {userId: number|null, re
                 <h2>Ingredients</h2>
                 <RecipeIngredientsMap ingredients={recipe.ingredients} />
 
+                <h2>Cooking Instructions</h2>
+                {recipe.cooking_instructions.map((instruction, index) => {
+                    return (
+                        <>
+                            <div key={index}>
+                                <p>Step {instruction.step} .</p>
+                                <p>{instruction.instruction}</p>
+                            </div>
+                        </>
+                    )
+                })}
             </div>
         </>
     );
