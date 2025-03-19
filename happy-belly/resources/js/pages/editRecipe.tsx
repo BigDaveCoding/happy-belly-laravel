@@ -1,4 +1,9 @@
-import {Ingredient, SingleRecipeIngredientsInstructions} from "@/types";
+import {
+    CookingInstructionFormData,
+    cookingInstructions,
+    Ingredient,
+    SingleRecipeIngredientsInstructions
+} from "@/types";
 import NavBar from "@/components/navbar";
 import ErrorMessage from "@/components/error-message";
 import FormAddRecipeIngredientInput from "@/components/form-add-recipe-ingredient-input";
@@ -20,7 +25,7 @@ export default function EditRecipe({userId, recipe }: {userId: number|null, reci
 
     const {ingredientData, addIngredient, removeIngredient, updateIngredientData, initIngredientData} = useIngredientFormData();
 
-    const {cookingInstructions, addCookingInstruction, removeCookingInstruction, updateCookingInstruction} = useCookingInstructionFormData()
+    const {cookingInstructions, addCookingInstruction, removeCookingInstruction, updateCookingInstruction, initCookingInstructionData} = useCookingInstructionFormData()
 
     const {formErrors, errors, formErrorsExist} = useAddFormErrors({recipeData, ingredientData, cookingInstructions})
 
@@ -31,6 +36,7 @@ export default function EditRecipe({userId, recipe }: {userId: number|null, reci
         assignToken()
         updateRecipeDataFields()
         updateIngredientDataFields()
+        updateCookingInstructionFields()
     },[])
 
     function updateRecipeDataFields() {
@@ -44,6 +50,11 @@ export default function EditRecipe({userId, recipe }: {userId: number|null, reci
     function updateIngredientDataFields() {
         const ingredients : Ingredient[] = recipe.ingredients
         initIngredientData(ingredients)
+    }
+
+    function updateCookingInstructionFields() {
+        const cookingInstructions : cookingInstructions[] = recipe.cooking_instructions
+        initCookingInstructionData(cookingInstructions)
     }
 
     console.log(ingredientData, recipeData, cookingInstructions)

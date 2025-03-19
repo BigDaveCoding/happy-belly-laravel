@@ -1,5 +1,5 @@
 import {FormEvent, useState} from "react";
-import {CookingInstructionFormData} from "@/types";
+import {CookingInstructionFormData, cookingInstructions} from "@/types";
 
 export function useCookingInstructionFormData() {
     const [cookingInstructions, setCookingInstructions] = useState<CookingInstructionFormData[]>([
@@ -27,5 +27,12 @@ export function useCookingInstructionFormData() {
         })
     }
 
-    return {cookingInstructions, addCookingInstruction, removeCookingInstruction, updateCookingInstruction}
+    function initCookingInstructionData(cookingInstructions : cookingInstructions[]) {
+        const input : CookingInstructionFormData[] = cookingInstructions.map(instruction => {
+            return {"cooking_instruction" : instruction.instruction}
+        })
+        setCookingInstructions(input)
+    }
+
+    return {cookingInstructions, addCookingInstruction, removeCookingInstruction, updateCookingInstruction, initCookingInstructionData}
 }
