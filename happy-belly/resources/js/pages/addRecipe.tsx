@@ -158,11 +158,13 @@ export default function AddRecipe() {
                     )
                 }
 
+                <h2 className="col-span-2">Cooking Instructions</h2>
+
                 {cookingInstructions.map((instruction, index) => {
                     return (
                         <>
                             <div className="col-span-2 flex flex-col gap-2 font-main-fredoka" key={index}>
-                                <p>{index + 1} .</p>
+                                <p>Step {index + 1} .</p>
                                 <textarea
                                     className="w-full border-1 border-black p-2 rounded"
                                     name="cooking_instruction[]"

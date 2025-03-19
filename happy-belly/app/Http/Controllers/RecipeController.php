@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CookingInstruction;
 use App\Models\Ingredient;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
@@ -48,6 +49,15 @@ class RecipeController extends Controller
             $recipe->ingredients()->attach($ingredient, [
                 'quantity' => $ingredientQuantity[$index],
                 'unit' => $ingredientUnit[$index]
+            ]);
+        }
+
+        $cookingInstructions = $request->input('cooking_instruction');
+
+        foreach ($cookingInstructions as $index => $instruction) {
+            $recipe->cookingInstructions()->create([
+                'step' => $index + 1,
+                'instruction' => $instruction
             ]);
         }
 
