@@ -62,9 +62,10 @@ export default function AddRecipe({userId} : {userId : number}) {
                     name="recipe_description"
                     placeholder="How would you describe your recipe?"
                 ></textarea>
-                {formErrors && (recipeData.recipe_description.length < 10 || recipeData.recipe_description.length > 5000) && (
+                {formErrors &&
+                    (recipeData.recipe_description.length < 10 || recipeData.recipe_description.length > 5000) &&
                     <ErrorMessage errorMessage={errors.recipe_description} extraCss={"col-span-2"} />
-                )}
+                }
 
                 <label className={`col-span-2`} htmlFor="recipe_image">
                     Image:
@@ -127,15 +128,6 @@ export default function AddRecipe({userId} : {userId : number}) {
                     removeCookingInstruction={removeCookingInstruction}
                     addCookingInstruction={addCookingInstruction}
                 />
-
-                {/*cooking step buttons*/}
-                {/*<FormPlusMinusButton addRemoveFunction={addCookingInstruction} plusOrMinus={true} />*/}
-                {/*{ cookingInstructions.length > 1 ? (*/}
-                {/*        <FormPlusMinusButton addRemoveFunction={removeCookingInstruction} plusOrMinus={false} />*/}
-                {/*    ) : (*/}
-                {/*        <span></span>*/}
-                {/*    )*/}
-                {/*}*/}
 
                 <input
                     className="bg-primary-color col-span-2 w-8/12 justify-self-center rounded border-1 p-2 inset-shadow-sm inset-shadow-black/30"
