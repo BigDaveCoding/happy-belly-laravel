@@ -21,6 +21,7 @@ export default function FormAddRecipeIngredientInput({ingredientData, formErrors
                                     type="text"
                                     name="ingredient_name[]"
                                     placeholder="ingredient"
+                                    value={ingredient.ingredient_name}
                                     onChange={(e) => {updateIngredientData(e, index)}}
                                 />
                                 {formErrors &&
@@ -32,6 +33,7 @@ export default function FormAddRecipeIngredientInput({ingredientData, formErrors
                                     type="number"
                                     name="ingredient_quantity[]"
                                     placeholder="quantity"
+                                    value={ingredient.ingredient_quantity}
                                     onChange={(e) => {updateIngredientData(e, index)}}
                                 />
                                 <input
@@ -39,6 +41,7 @@ export default function FormAddRecipeIngredientInput({ingredientData, formErrors
                                     type="text"
                                     name="ingredient_unit[]"
                                     placeholder="unit"
+                                    value={ingredient.ingredient_unit}
                                     onChange={(e) => {updateIngredientData(e, index)}}
                                 />
                                 {formErrors &&
@@ -59,7 +62,6 @@ export default function FormAddRecipeIngredientInput({ingredientData, formErrors
                             </div>
                         </div>
                         {/*ingredient form buttons*/}
-                        <FormPlusMinusButton addRemoveFunction={addIngredient} plusOrMinus={true} />
                         <FormPlusMinusButton addRemoveFunction={() => removeIngredient(index)} plusOrMinus={false} />
                         {/*{ ingredientData.length > 1 ? (*/}
                         {/*    <FormPlusMinusButton addRemoveFunction={removeIngredient} plusOrMinus={false} />*/}
