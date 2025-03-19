@@ -130,29 +130,29 @@ export default function EditRecipe({userId, recipe }: {userId: number|null, reci
 
                 <h2 className="col-span-2">Ingredients</h2>
 
-                <FormAddRecipeIngredientInput ingredientData={ingredientData} formErrors={formErrors} errors={errors} updateIngredientData={updateIngredientData} />
+                {/*<FormAddRecipeIngredientInput ingredientData={ingredientData} formErrors={formErrors} errors={errors} updateIngredientData={updateIngredientData} />*/}
 
-                {/*ingredient form buttons*/}
-                <FormPlusMinusButton addRemoveFunction={addIngredient} plusOrMinus={true} />
-                { ingredientData.length > 1 ? (
-                    <FormPlusMinusButton addRemoveFunction={removeIngredient} plusOrMinus={false} />
-                ) : (
-                    <span></span>
-                )
-                }
+                {/*/!*ingredient form buttons*!/*/}
+                {/*<FormPlusMinusButton addRemoveFunction={addIngredient} plusOrMinus={true} />*/}
+                {/*{ ingredientData.length > 1 ? (*/}
+                {/*    <FormPlusMinusButton addRemoveFunction={removeIngredient} plusOrMinus={false} />*/}
+                {/*) : (*/}
+                {/*    <span></span>*/}
+                {/*)*/}
+                {/*}*/}
 
                 <h2 className="col-span-2">Cooking Instructions</h2>
 
-                <FormAddCookingInstructionsInput cookingInstructions={cookingInstructions} formErrors={formErrors} errors={errors} updateCookingInstruction={updateCookingInstruction} />
+                {/*<FormAddCookingInstructionsInput cookingInstructions={cookingInstructions} formErrors={formErrors} errors={errors} updateCookingInstruction={updateCookingInstruction} />*/}
 
-                {/*cooking step buttons*/}
-                <FormPlusMinusButton addRemoveFunction={addCookingInstruction} plusOrMinus={true} />
-                { cookingInstructions.length > 1 ? (
-                    <FormPlusMinusButton addRemoveFunction={removeCookingInstruction} plusOrMinus={false} />
-                ) : (
-                    <span></span>
-                )
-                }
+                {/*/!*cooking step buttons*!/*/}
+                {/*<FormPlusMinusButton addRemoveFunction={addCookingInstruction} plusOrMinus={true} />*/}
+                {/*{ cookingInstructions.length > 1 ? (*/}
+                {/*    <FormPlusMinusButton addRemoveFunction={removeCookingInstruction} plusOrMinus={false} />*/}
+                {/*) : (*/}
+                {/*    <span></span>*/}
+                {/*)*/}
+                {/*}*/}
 
                 <input
                     className="bg-primary-color col-span-2 w-8/12 justify-self-center rounded border-1 p-2 inset-shadow-sm inset-shadow-black/30"
