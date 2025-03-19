@@ -8,7 +8,7 @@ export function useRecipeData() {
         'recipe_description' : '',
         'recipe_image' : '',
         'recipe_cooking_time' : '',
-        'recipe_serves' : '0'
+        'recipe_serves' : 0
     })
 
     function inputRecipeData(e: FormEvent): void {
