@@ -13,9 +13,8 @@ export function useCookingInstructionFormData() {
         ])
     }
 
-    function removeCookingInstruction() {
-        const $newData = [...cookingInstructions]
-        setCookingInstructions($newData.slice(0,-1))
+    function removeCookingInstruction(index : number) {
+        setCookingInstructions(cookingInstructions.filter((_, i) => i !== index))
     }
 
     function updateCookingInstruction(e: FormEvent, index:number){

@@ -113,16 +113,16 @@ export default function AddRecipe({userId} : {userId : number}) {
 
                 <h2 className="col-span-2">Cooking Instructions</h2>
 
-                <FormAddCookingInstructionsInput cookingInstructions={cookingInstructions} formErrors={formErrors} errors={errors} updateCookingInstruction={updateCookingInstruction} />
+                <FormAddCookingInstructionsInput cookingInstructions={cookingInstructions} formErrors={formErrors} errors={errors} updateCookingInstruction={updateCookingInstruction} removeCookingInstruction={removeCookingInstruction} />
 
                 {/*cooking step buttons*/}
                 <FormPlusMinusButton addRemoveFunction={addCookingInstruction} plusOrMinus={true} />
-                { cookingInstructions.length > 1 ? (
-                        <FormPlusMinusButton addRemoveFunction={removeCookingInstruction} plusOrMinus={false} />
-                    ) : (
-                        <span></span>
-                    )
-                }
+                {/*{ cookingInstructions.length > 1 ? (*/}
+                {/*        <FormPlusMinusButton addRemoveFunction={removeCookingInstruction} plusOrMinus={false} />*/}
+                {/*    ) : (*/}
+                {/*        <span></span>*/}
+                {/*    )*/}
+                {/*}*/}
 
                 <input
                     className="bg-primary-color col-span-2 w-8/12 justify-self-center rounded border-1 p-2 inset-shadow-sm inset-shadow-black/30"
