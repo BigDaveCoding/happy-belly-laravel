@@ -5,7 +5,6 @@ import {useIngredientFormData} from "@/hooks/use-ingredient-form-data";
 import {useRecipeData} from "@/hooks/use-recipe-data";
 import {useAddFormErrors} from "@/hooks/use-add-form-errors";
 import ErrorMessage from "@/components/error-message";
-import {IngredientFormData} from "@/types";
 import {useCookingInstructionFormData} from "@/hooks/use-cooking-instruction-form-data";
 import FormPlusMinusButton from "@/components/form-plus-minus-button";
 
@@ -19,7 +18,7 @@ export default function AddRecipe() {
 
     const {cookingInstructions, addCookingInstruction, removeCookingInstruction, updateCookingInstruction} = useCookingInstructionFormData()
 
-    const {formErrors, errors, formErrorsExist} = useAddFormErrors({recipeData, ingredientData})
+    const {formErrors, errors, formErrorsExist} = useAddFormErrors({recipeData, ingredientData, cookingInstructions})
 
     useEffect(() => {
         async function assignToken() {
@@ -172,8 +171,11 @@ export default function AddRecipe() {
                                     onChange={(e) => updateCookingInstruction(e, index)}
                                 >
                                 </textarea>
-
                             </div>
+                            {formErrors &&
+                                instruction.cooking_instruction.length <= 0 &&
+                                <ErrorMessage errorMessage={errors.cooking_instruction} extraCss={"col-span-2"} />
+                            }
                         </>
                     )
                 })}

@@ -1,7 +1,7 @@
 import {FormEvent, useState} from "react";
-import {IngredientFormData, RecipeFormData} from "@/types";
+import {IngredientFormData, RecipeFormData, CookingInstructionFormData} from "@/types";
 
-export function useAddFormErrors({recipeData, ingredientData}:{recipeData: RecipeFormData, ingredientData:IngredientFormData[]}) {
+export function useAddFormErrors({recipeData, ingredientData, cookingInstructions}:{recipeData: RecipeFormData, ingredientData:IngredientFormData[], cookingInstructions:CookingInstructionFormData[]}) {
 
     const [formErrors, setFormErrors] = useState<boolean>(false);
 
@@ -12,12 +12,14 @@ export function useAddFormErrors({recipeData, ingredientData}:{recipeData: Recip
         'recipe_cooking_time' : 'Must be a number & above 0',
         'recipe_serves' : 'Must be a number & above 0',
         'ingredient_name' : 'Must have an ingredient',
-        'ingredient_quantity' : 'Must be a number & above 0'
+        'ingredient_quantity' : 'Must be a number & above 0',
+        'cooking_instruction' : 'Step cannot be empty'
     }
 
     function formErrorsExist(e: FormEvent) {
         formRecipeErrorsExist(e)
         formIngredientErrorsExist(e)
+        formCookingInstructionErrorsExist(e)
     }
 
     function formRecipeErrorsExist(e: FormEvent) {
@@ -36,6 +38,16 @@ export function useAddFormErrors({recipeData, ingredientData}:{recipeData: Recip
             if(ingredient.ingredient_name.length === 0 ||
                 (ingredient.ingredient_quantity.length === 0 || isNaN(parseInt(ingredient.ingredient_quantity)) || parseInt(ingredient.ingredient_quantity) <= 0)
             ){
+                e.preventDefault()
+                setFormErrors(true)
+            }
+        })
+    }
+
+    function formCookingInstructionErrorsExist(e: FormEvent) : void {
+        cookingInstructions.forEach(instruction => {
+            if (instruction.cooking_instruction.length <= 0
+            ) {
                 e.preventDefault()
                 setFormErrors(true)
             }

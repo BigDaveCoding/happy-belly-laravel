@@ -1,7 +1,8 @@
 import {FormEvent, useState} from "react";
+import {CookingInstructionFormData} from "@/types";
 
 export function useCookingInstructionFormData() {
-    const [cookingInstructions, setCookingInstructions] = useState([
+    const [cookingInstructions, setCookingInstructions] = useState<CookingInstructionFormData[]>([
         {"cooking_instruction" : ""}
     ])
 

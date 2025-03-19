@@ -90,3 +90,7 @@ export interface IngredientFormData {
     ingredient_unit: string;
     ingredient_allergen: number;
 }
+
+export interface CookingInstructionFormData {
+    'cooking_instruction' : string
+}
