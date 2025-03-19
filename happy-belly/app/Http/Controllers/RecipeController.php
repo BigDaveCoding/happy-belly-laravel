@@ -17,6 +17,7 @@ class RecipeController extends Controller
 
     public function create(Request $request)
     {
+//        dd($userId);
 //        dd($request->all());
         $userId = Auth::id();
 

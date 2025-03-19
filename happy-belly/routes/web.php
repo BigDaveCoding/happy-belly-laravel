@@ -48,36 +48,19 @@ Route::get('/singleRecipe/{id}', function ($id) {
     ]);
 })->name('singleRecipe');
 
+
+
 Route::get('/recipe/add', function() {
-    return Inertia::render('addRecipe');
+
+    $userId = Auth::id();
+    return Inertia::render('addRecipe', [
+        'userId' => $userId
+    ]);
 });
 
-
-
-
-
-
-
-//Route::middleware(['web'])->group(function () {
-//    Route::post('/recipe/add', [RecipeController::class, 'create']);
-//});
-
-Route::middleware(['web'])->group(function () {
-    Route::post('/recipe/add', function (Request $request) {
-        // Create recipe
-        app(RecipeController::class)->create($request);
-
-        // Create ingredients
-//        app(IngredientController::class)->create($request);
-
-        //update pivot table
-
-        return response()->json(['message' => 'Recipe and ingredients created successfully.']);
-    });
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::post('/recipe/add', [RecipeController::class, 'create']);
 });
-
-
-
 
 
 

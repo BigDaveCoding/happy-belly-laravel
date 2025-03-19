@@ -8,7 +8,7 @@ import ErrorMessage from "@/components/error-message";
 import {useCookingInstructionFormData} from "@/hooks/use-cooking-instruction-form-data";
 import FormPlusMinusButton from "@/components/form-plus-minus-button";
 
-export default function AddRecipe() {
+export default function AddRecipe({userId} : {userId : number}) {
 
     const [csrfToken, setCsrfToken] = useState<string | null>(null);
 
@@ -29,7 +29,7 @@ export default function AddRecipe() {
 
     return (
         <>
-            <NavBar userId={1} />
+            <NavBar userId={userId} />
             <h1>Add Recipe</h1>
             <form
                 className="mx-4 grid grid-cols-[1fr_2fr] items-center gap-2"
@@ -39,7 +39,7 @@ export default function AddRecipe() {
                 onSubmit={(e) => formErrorsExist(e)}
             >
                 {csrfToken && <input type="hidden" name="_token" value={csrfToken} />}
-                <input type="hidden" name="user_id" value={1} />
+
                 <label htmlFor="recipe_name">Recipe Name :</label>
                 <input
                     className="rounded border-1 border-black p-2 inset-shadow-sm inset-shadow-slate-300"
@@ -47,7 +47,10 @@ export default function AddRecipe() {
                     name="recipe_name"
                     placeholder="Enchiladas"
                 />
-                {formErrors && recipeData.recipe_name.length < 4 && <ErrorMessage errorMessage={errors.recipe_name} extraCss={"col-span-2"} />}
+                {formErrors &&
+                    recipeData.recipe_name.length < 4 &&
+                    <ErrorMessage errorMessage={errors.recipe_name} extraCss={"col-span-2"} />
+                }
 
                 <label htmlFor="recipe_description">Description :</label>
                 <textarea
@@ -79,9 +82,10 @@ export default function AddRecipe() {
                     name="recipe_cooking_time"
                     placeholder="30"
                 />
-                {formErrors && (isNaN(parseInt(recipeData.recipe_cooking_time)) || parseInt(recipeData.recipe_cooking_time) <= 0) && (
+                {formErrors &&
+                    (isNaN(parseInt(recipeData.recipe_cooking_time)) || parseInt(recipeData.recipe_cooking_time) <= 0) &&
                     <ErrorMessage errorMessage={errors.recipe_cooking_time} extraCss={"col-span-2"} />
-                )}
+                }
 
                 <label htmlFor="recipe_serves">Serves :</label>
                 <input
@@ -90,9 +94,10 @@ export default function AddRecipe() {
                     name="recipe_serves"
                     placeholder="4"
                 />
-                {formErrors && (isNaN(parseInt(recipeData.recipe_serves)) || parseInt(recipeData.recipe_serves) <= 0) && (
+                {formErrors &&
+                    (isNaN(parseInt(recipeData.recipe_serves)) || parseInt(recipeData.recipe_serves) <= 0) &&
                     <ErrorMessage errorMessage={errors.recipe_serves} extraCss={"col-span-2"} />
-                )}
+                }
 
                 <hr className="col-span-2 border-black my-2" />
 
