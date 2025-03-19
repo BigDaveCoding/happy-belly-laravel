@@ -17,27 +17,48 @@ class RecipeController extends Controller
 
     public function create(Request $request)
     {
+//        dd($request->all());
         $userId = Auth::id();
 
+        $validatedData = $request->validate([
+            'recipe_name' => 'required|string|max:255|min:4',
+            'recipe_description' => 'required|string|min:10',
+            'recipe_cooking_time' => 'required|string|numeric|min:1',
+            'recipe_serves' => 'required|integer|numeric|min:1',
+            'ingredient_name' => 'required|array',
+            'ingredient_name.*' => 'required|string',
+            'ingredient_quantity' => 'required|array',
+            'ingredient_quantity.*' => 'required|integer|min:1',
+            'ingredient_unit' => 'required|array',
+            'ingredient_unit.*' => 'nullable|string',
+            'ingredient_allergen' => 'required|array',
+            'ingredient_allergen.*' => 'required|boolean',
+            'cooking_instruction' => 'required|array',
+            'cooking_instruction.*' => 'required|string',
+        ]);
+
+//        dd($validatedData);
+
         $recipe = new Recipe();
-        $recipe->name = $request['recipe_name'];
-        $recipe->description = $request['recipe_description'];
-        $recipe->image = 'https://placehold.co/600x400';
-        $recipe->cooking_time = $request['recipe_cooking_time'];
-        $recipe->serves = $request['recipe_serves'];
+        $recipe->name = $validatedData['recipe_name'];
+        $recipe->description = $validatedData['recipe_description'];
+        $recipe->image = 'https://placehold.co/600x400'; // static value
+        $recipe->cooking_time = $validatedData['recipe_cooking_time'];
+        $recipe->serves = $validatedData['recipe_serves'];
         $recipe->user_id = $userId;
+
         $recipe->save();
 
-        $ingredientNames = $request->input('ingredient_name');
-        $ingredientQuantity = $request->input('ingredient_quantity');
-        $ingredientUnit = $request->input('ingredient_unit');
-        $ingredientAllergen = $request->input('ingredient_allergen');
+        $ingredientNames = $validatedData['ingredient_name'];
+        $ingredientQuantity = $validatedData['ingredient_quantity'];
+        $ingredientUnit = $validatedData['ingredient_unit'];
+        $ingredientAllergen = $validatedData['ingredient_allergen'];
 
         foreach ($ingredientNames as $index => $ingredientName) {
 
             $ingredient = Ingredient::firstOrCreate(['name' => $ingredientName,
-                'food_group' => 'food_group',
-                'allergen' => $ingredientAllergen[$index],]);
+                'food_group' => 'food_group', // static value
+                'allergen' => $ingredientAllergen[$index]]);
 
             $recipe->ingredients()->attach($ingredient, [
                 'quantity' => $ingredientQuantity[$index],
@@ -45,7 +66,7 @@ class RecipeController extends Controller
             ]);
         }
 
-        $cookingInstructions = $request->input('cooking_instruction');
+        $cookingInstructions = $validatedData['cooking_instruction'];
 
         foreach ($cookingInstructions as $index => $instruction) {
             $recipe->cookingInstructions()->create([

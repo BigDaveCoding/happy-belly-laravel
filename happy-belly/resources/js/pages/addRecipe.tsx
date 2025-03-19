@@ -39,6 +39,7 @@ export default function AddRecipe() {
                 onSubmit={(e) => formErrorsExist(e)}
             >
                 {csrfToken && <input type="hidden" name="_token" value={csrfToken} />}
+                <input type="hidden" name="user_id" value={1} />
                 <label htmlFor="recipe_name">Recipe Name :</label>
                 <input
                     className="rounded border-1 border-black p-2 inset-shadow-sm inset-shadow-slate-300"
