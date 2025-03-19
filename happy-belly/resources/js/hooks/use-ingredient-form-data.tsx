@@ -3,7 +3,7 @@ import {FormEvent, useState} from "react";
 
 export function useIngredientFormData() {
     const [ingredientData, setIngredientData] = useState<IngredientFormData[]>([
-        {ingredient_name: '', ingredient_quantity: '', ingredient_unit: '', ingredient_allergen : 0}
+        {ingredient_name: '', ingredient_quantity: null, ingredient_unit: '', ingredient_allergen : false}
     ])
 
     function updateIngredientData(e: FormEvent, index: number) {
@@ -22,7 +22,7 @@ export function useIngredientFormData() {
     function addIngredient(): void {
         setIngredientData([
             ...ingredientData,
-            {ingredient_name: '', ingredient_quantity: '', ingredient_unit: '', ingredient_allergen : 0}
+            {ingredient_name: '', ingredient_quantity: null, ingredient_unit: '', ingredient_allergen : false}
         ])
     }
 
@@ -33,14 +33,15 @@ export function useIngredientFormData() {
     }
 
     function initIngredientData(ingredients : Ingredient[]): void {
-        const input=
-            ingredients.map((ingredient) => {
+        const input : IngredientFormData[] =
+            ingredients.map((ingredient) : IngredientFormData => {
                 return {
                     ingredient_name: ingredient.name,
                     ingredient_quantity: ingredient.pivot.quantity,
                     ingredient_unit: ingredient.pivot.unit,
                     ingredient_allergen : ingredient.allergen}
             })
+        console.log("input var", input)
         setIngredientData(input)
     }
 

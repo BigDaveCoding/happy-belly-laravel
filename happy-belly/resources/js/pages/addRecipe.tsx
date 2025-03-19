@@ -29,7 +29,7 @@ export default function AddRecipe({userId} : {userId : number}) {
         assignToken()
     },[])
 
-    // console.log(ingredientData)
+    console.log(ingredientData)
 
     return (
         <>

@@ -11,7 +11,7 @@ export default function FormAddCookingInstructionsInput({cookingInstructions, fo
         addCookingInstruction : (index : number) => void
     }) {
 
-    console.log(cookingInstructions)
+    // console.log(cookingInstructions)
     return (
         <>
             {cookingInstructions.map((instruction, index) => {
