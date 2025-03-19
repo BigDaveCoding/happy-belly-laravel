@@ -107,16 +107,29 @@ export default function AddRecipe({userId} : {userId : number}) {
 
                 <h2 className="col-span-2">Ingredients</h2>
 
-                <FormAddRecipeIngredientInput ingredientData={ingredientData} formErrors={formErrors} errors={errors} updateIngredientData={updateIngredientData} addIngredient={addIngredient} removeIngredient={removeIngredient} />
+                <FormAddRecipeIngredientInput
+                    ingredientData={ingredientData}
+                    formErrors={formErrors}
+                    errors={errors}
+                    updateIngredientData={updateIngredientData}
+                    addIngredient={addIngredient}
+                    removeIngredient={removeIngredient}
+                />
 
                 <FormPlusMinusButton addRemoveFunction={addIngredient} plusOrMinus={true} />
 
                 <h2 className="col-span-2">Cooking Instructions</h2>
 
-                <FormAddCookingInstructionsInput cookingInstructions={cookingInstructions} formErrors={formErrors} errors={errors} updateCookingInstruction={updateCookingInstruction} removeCookingInstruction={removeCookingInstruction} />
+                <FormAddCookingInstructionsInput
+                    cookingInstructions={cookingInstructions}
+                    formErrors={formErrors} errors={errors}
+                    updateCookingInstruction={updateCookingInstruction}
+                    removeCookingInstruction={removeCookingInstruction}
+                    addCookingInstruction={addCookingInstruction}
+                />
 
                 {/*cooking step buttons*/}
-                <FormPlusMinusButton addRemoveFunction={addCookingInstruction} plusOrMinus={true} />
+                {/*<FormPlusMinusButton addRemoveFunction={addCookingInstruction} plusOrMinus={true} />*/}
                 {/*{ cookingInstructions.length > 1 ? (*/}
                 {/*        <FormPlusMinusButton addRemoveFunction={removeCookingInstruction} plusOrMinus={false} />*/}
                 {/*    ) : (*/}

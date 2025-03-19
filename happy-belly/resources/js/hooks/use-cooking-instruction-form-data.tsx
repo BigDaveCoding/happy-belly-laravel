@@ -6,10 +6,11 @@ export function useCookingInstructionFormData() {
         {"cooking_instruction" : ""}
     ])
 
-    function addCookingInstruction() {
+    function addCookingInstruction(index : number) {
         setCookingInstructions([
-            ...cookingInstructions,
-            {"cooking_instruction" : ""}
+            ...cookingInstructions.slice(0, index + 1),
+            {"cooking_instruction" : ""},
+            ...cookingInstructions.slice(index + 1)
         ])
     }
 
