@@ -129,6 +129,8 @@ export default function AddRecipe({userId} : {userId : number}) {
                     addCookingInstruction={addCookingInstruction}
                 />
 
+                {cookingInstructions.length === 0 && <FormPlusMinusButton addRemoveFunction={() => addCookingInstruction(0)} plusOrMinus={true} />}
+
                 <input
                     className="bg-primary-color col-span-2 w-8/12 justify-self-center rounded border-1 p-2 inset-shadow-sm inset-shadow-black/30"
                     type="submit"
