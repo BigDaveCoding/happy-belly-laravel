@@ -32,14 +32,14 @@ export function useIngredientFormData() {
         );
     }
 
-    function initIngredientData(ingredients : IngredientFormData[]): void {
+    function initIngredientData(ingredients : Ingredient[]): void {
         const input=
-            ingredients.map((ingredient:IngredientFormData) => {
+            ingredients.map((ingredient) => {
                 return {
-                    ingredient_name: ingredient.ingredient_name,
-                    ingredient_quantity: ingredient.ingredient_quantity,
-                    ingredient_unit: ingredient.ingredient_unit ?? null,
-                    ingredient_allergen : ingredient.ingredient_allergen}
+                    ingredient_name: ingredient.name,
+                    ingredient_quantity: ingredient.pivot.quantity,
+                    ingredient_unit: ingredient.pivot.unit,
+                    ingredient_allergen : ingredient.allergen}
             })
         setIngredientData(input)
     }

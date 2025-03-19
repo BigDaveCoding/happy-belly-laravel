@@ -1,4 +1,4 @@
-import {SingleRecipeIngredientsInstructions} from "@/types";
+import {Ingredient, SingleRecipeIngredientsInstructions} from "@/types";
 import NavBar from "@/components/navbar";
 import ErrorMessage from "@/components/error-message";
 import FormAddRecipeIngredientInput from "@/components/form-add-recipe-ingredient-input";
@@ -42,7 +42,7 @@ export default function EditRecipe({userId, recipe }: {userId: number|null, reci
     }
 
     function updateIngredientDataFields() {
-        const ingredients = recipe.ingredients
+        const ingredients : Ingredient[] = recipe.ingredients
         initIngredientData(ingredients)
     }
 
