@@ -7,6 +7,7 @@ import {useAddFormErrors} from "@/hooks/use-add-form-errors";
 import ErrorMessage from "@/components/error-message";
 import {IngredientFormData} from "@/types";
 import {useCookingInstructionFormData} from "@/hooks/use-cooking-instruction-form-data";
+import FormPlusMinusButton from "@/components/form-plus-minus-button";
 
 export default function AddRecipe() {
 
@@ -148,21 +149,12 @@ export default function AddRecipe() {
                     );
                 })}
 
-                {/*add ingredient button*/}
-                <button className="" type="button" onClick={() => addIngredient()}>
-                    <i className="fa-solid fa-plus"></i>
-                </button>
-
-                {/*remove ingredient button*/}
+                {/*ingredient form buttons*/}
+                <FormPlusMinusButton addRemoveFunction={addIngredient} plusOrMinus={true} />
                 { ingredientData.length > 1 ? (
-                    <button
-                        className=""
-                        type="button"
-                        onClick={() => removeIngredient()}>
-                        <i className="fa-solid fa-minus"></i>
-                    </button>
+                        <FormPlusMinusButton addRemoveFunction={removeIngredient} plusOrMinus={false} />
                     ) : (
-                    <span></span>
+                        <span></span>
                     )
                 }
 
@@ -184,20 +176,13 @@ export default function AddRecipe() {
                     )
                 })}
 
-                <button className="" type="button" onClick={() => addCookingInstruction()}>
-                    <i className="fa-solid fa-plus"></i>
-                </button>
-
+                {/*cooking step buttons*/}
+                <FormPlusMinusButton addRemoveFunction={addCookingInstruction} plusOrMinus={true} />
                 { cookingInstructions.length > 1 ? (
-                    <button
-                        className=""
-                        type="button"
-                        onClick={() => removeCookingInstruction()}>
-                        <i className="fa-solid fa-minus"></i>
-                    </button>
-                ) : (
-                    <span></span>
-                )
+                        <FormPlusMinusButton addRemoveFunction={removeCookingInstruction} plusOrMinus={false} />
+                    ) : (
+                        <span></span>
+                    )
                 }
 
                 <input
