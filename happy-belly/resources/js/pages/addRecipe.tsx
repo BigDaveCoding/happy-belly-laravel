@@ -7,6 +7,7 @@ import {useAddFormErrors} from "@/hooks/use-add-form-errors";
 import ErrorMessage from "@/components/error-message";
 import {useCookingInstructionFormData} from "@/hooks/use-cooking-instruction-form-data";
 import FormPlusMinusButton from "@/components/form-plus-minus-button";
+import FormAddRecipeIngredientInput from "@/components/form-add-recipe-ingredient-input";
 
 export default function AddRecipe({userId} : {userId : number}) {
 
@@ -103,56 +104,7 @@ export default function AddRecipe({userId} : {userId : number}) {
 
                 <h2 className="col-span-2">Ingredients</h2>
 
-                {ingredientData.map((ingredient, index: number) => {
-                    return (
-                        <>
-                            <div className="col-span-2" key={index + 1}>
-                                <div className="grid grid-cols-2 gap-2 rounded border-1 border-black/50 p-2">
-                                    <input
-                                        className="col-span-2 rounded border border-black p-2 inset-shadow-sm inset-shadow-slate-300"
-                                        type="text"
-                                        name="ingredient_name[]"
-                                        placeholder="ingredient"
-                                        onChange={(e) => {updateIngredientData(e, index)}}
-                                    />
-                                    {formErrors &&
-                                        ingredient.ingredient_name.length <= 0 &&
-                                        <ErrorMessage errorMessage={errors.ingredient_name} extraCss={"col-span-2"} />
-                                    }
-                                    <input
-                                        className="rounded border border-black p-2 inset-shadow-sm inset-shadow-slate-300"
-                                        type="number"
-                                        name="ingredient_quantity[]"
-                                        placeholder="quantity"
-                                        onChange={(e) => {updateIngredientData(e, index)}}
-                                    />
-                                    <input
-                                        className="rounded border border-black p-2 inset-shadow-sm inset-shadow-slate-300"
-                                        type="text"
-                                        name="ingredient_unit[]"
-                                        placeholder="unit"
-                                        onChange={(e) => {updateIngredientData(e, index)}}
-                                    />
-                                    {formErrors &&
-                                        (ingredient.ingredient_quantity.length === 0 || isNaN(parseInt(ingredient.ingredient_quantity)) || parseInt(ingredient.ingredient_quantity) <= 0) &&
-                                        <ErrorMessage errorMessage={errors.ingredient_quantity} extraCss={"col-span-2"} />
-                                    }
-                                    <label htmlFor="ingredient_allergen[]">
-                                        Allergen :
-                                    </label>
-                                    <select
-                                        className="border-1 rounded"
-                                        name="ingredient_allergen[]"
-                                        onChange={(e) => {updateIngredientData(e, index)}}
-                                    >
-                                        <option value="0" defaultChecked>No</option>
-                                        <option value="1">Yes</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </>
-                    );
-                })}
+                <FormAddRecipeIngredientInput ingredientData={ingredientData} formErrors={formErrors} errors={errors} updateIngredientData={updateIngredientData} />
 
                 {/*ingredient form buttons*/}
                 <FormPlusMinusButton addRemoveFunction={addIngredient} plusOrMinus={true} />
