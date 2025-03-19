@@ -8,6 +8,7 @@ import ErrorMessage from "@/components/error-message";
 import {useCookingInstructionFormData} from "@/hooks/use-cooking-instruction-form-data";
 import FormPlusMinusButton from "@/components/form-plus-minus-button";
 import FormAddRecipeIngredientInput from "@/components/form-add-recipe-ingredient-input";
+import FormAddCookingInstructionsInput from "@/components/form-add-cooking-instructions-input";
 
 export default function AddRecipe({userId} : {userId : number}) {
 
@@ -117,26 +118,7 @@ export default function AddRecipe({userId} : {userId : number}) {
 
                 <h2 className="col-span-2">Cooking Instructions</h2>
 
-                {cookingInstructions.map((instruction, index) => {
-                    return (
-                        <>
-                            <div className="col-span-2 flex flex-col gap-2 font-main-fredoka" key={index}>
-                                <p>Step {index + 1} .</p>
-                                <textarea
-                                    className="w-full border-1 border-black p-2 rounded"
-                                    name="cooking_instruction[]"
-                                    placeholder="What happens now?!"
-                                    onChange={(e) => updateCookingInstruction(e, index)}
-                                >
-                                </textarea>
-                            </div>
-                            {formErrors &&
-                                instruction.cooking_instruction.length <= 0 &&
-                                <ErrorMessage errorMessage={errors.cooking_instruction} extraCss={"col-span-2"} />
-                            }
-                        </>
-                    )
-                })}
+                <FormAddCookingInstructionsInput cookingInstructions={cookingInstructions} formErrors={formErrors} errors={errors} updateCookingInstruction={updateCookingInstruction} />
 
                 {/*cooking step buttons*/}
                 <FormPlusMinusButton addRemoveFunction={addCookingInstruction} plusOrMinus={true} />
