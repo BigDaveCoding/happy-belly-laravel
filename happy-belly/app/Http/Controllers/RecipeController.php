@@ -19,19 +19,12 @@ class RecipeController extends Controller
     {
         $userId = Auth::id();
 
-        $validatedData = $request->validate([
-            'recipe_name' => 'required|string|max:255',
-            'recipe_description' => 'required|string',
-            'recipe_cooking_time' => 'required|integer|min:1',
-            'recipe_serves' => 'required|integer|min:1',
-        ]);
-
         $recipe = new Recipe();
-        $recipe->name = $validatedData['recipe_name'];
-        $recipe->description = $validatedData['recipe_description'];
+        $recipe->name = $request['recipe_name'];
+        $recipe->description = $request['recipe_description'];
         $recipe->image = 'https://placehold.co/600x400';
-        $recipe->cooking_time = $validatedData['recipe_cooking_time'];
-        $recipe->serves = $validatedData['recipe_serves'];
+        $recipe->cooking_time = $request['recipe_cooking_time'];
+        $recipe->serves = $request['recipe_serves'];
         $recipe->user_id = $userId;
         $recipe->save();
 
