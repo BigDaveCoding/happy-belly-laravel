@@ -26,9 +26,10 @@ export function useIngredientFormData() {
         ])
     }
 
-    function removeIngredient(): void {
-        const removedIngredientArray = ingredientData.slice(0, -1)
-        setIngredientData(removedIngredientArray)
+    function removeIngredient(index : number): void {
+        setIngredientData(prevIngredients =>
+            prevIngredients.filter((_, i) => i !== index)
+        );
     }
 
     function initIngredientData(ingredients): void {

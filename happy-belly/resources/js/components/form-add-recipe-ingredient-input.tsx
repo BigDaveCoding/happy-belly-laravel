@@ -1,9 +1,14 @@
 import ErrorMessage from "@/components/error-message";
 import {IngredientFormData} from "@/types";
 import {FormEvent} from "react";
+import FormPlusMinusButton from "@/components/form-plus-minus-button";
+import {useIngredientFormData} from "@/hooks/use-ingredient-form-data";
 
-export default function FormAddRecipeIngredientInput({ingredientData, formErrors, errors, updateIngredientData} :
-{ingredientData : IngredientFormData[], formErrors : boolean, errors : Record<string, string>, updateIngredientData: (e: FormEvent, index: number) => void}) {
+export default function FormAddRecipeIngredientInput({ingredientData, formErrors, errors, updateIngredientData, addIngredient, removeIngredient} :
+{ingredientData : IngredientFormData[], formErrors : boolean, errors : Record<string, string>, updateIngredientData: (e: FormEvent, index: number) => void, addIngredient : () => void, removeIngredient : (index : number) => void}) {
+
+    // const {addIngredient, removeIngredient} = useIngredientFormData()
+
     return (
         <>
             {ingredientData.map((ingredient, index: number) => {
@@ -53,6 +58,15 @@ export default function FormAddRecipeIngredientInput({ingredientData, formErrors
                                 </select>
                             </div>
                         </div>
+                        {/*ingredient form buttons*/}
+                        <FormPlusMinusButton addRemoveFunction={addIngredient} plusOrMinus={true} />
+                        <FormPlusMinusButton addRemoveFunction={() => removeIngredient(index)} plusOrMinus={false} />
+                        {/*{ ingredientData.length > 1 ? (*/}
+                        {/*    <FormPlusMinusButton addRemoveFunction={removeIngredient} plusOrMinus={false} />*/}
+                        {/*) : (*/}
+                        {/*    <span></span>*/}
+                        {/*)*/}
+                        {/*}*/}
                     </>
                 );
             })}
