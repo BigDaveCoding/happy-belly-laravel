@@ -18,8 +18,8 @@ export default function AddRecipe({userId, csrf_token} : {userId : number, csrf_
 
     const {formErrors, errors, formErrorsExist} = useAddFormErrors({recipeData, ingredientData, cookingInstructions})
 
-    console.log(ingredientData)
-    console.log(csrf_token)
+    // console.log(ingredientData)
+    // console.log(csrf_token)
 
     return (
         <>
