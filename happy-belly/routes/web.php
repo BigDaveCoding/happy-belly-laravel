@@ -20,26 +20,15 @@ Route::get('/', function () {
 //    })->name('dashboard');
 //});
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/recipes', [RecipeController::class, 'recipesPage']);
-    Route::get('/singleRecipe/{recipe}', [RecipeController::class, 'singleRecipe']);
-    Route::get('/recipe/add', [RecipeController::class, 'addRecipePage']);
-});
-
-Route::middleware(['web', 'auth'])->group(function () {
-    Route::post('/recipe/add', [RecipeController::class, 'create']);
-});
-
-Route::middleware(['web', 'auth'])->group(function () {
-    Route::get('/recipe/edit/{id}', function ($id) {
-        return Inertia::render('editRecipe', [
-            'userId' => Auth::id(),
-            'recipe' => Recipe::with('ingredients', 'cookingInstructions')->findOrFail($id)
-        ]);
+Route::middleware(['auth', 'verified', 'web'])->group(function () {
+    Route::controller(RecipeController::class)->group(function () {
+        Route::get('/recipes', 'recipesPage');
+        Route::get('/singleRecipe/{recipe}', 'singleRecipePage');
+        Route::get('/recipe/add', 'addRecipePage');
+        Route::get('/recipe/edit/{recipe}', 'editRecipePage');
+        Route::post('/recipe/add', 'create');
     });
 });
-
-
 
 Route::get('/debug-csrf', function () {
     return response()->json([

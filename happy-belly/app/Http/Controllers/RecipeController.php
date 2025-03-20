@@ -37,7 +37,7 @@ class RecipeController extends Controller
         return Recipe::where('user_id', Auth::id())->get();
     }
 
-    public function singleRecipe(Recipe $recipe)
+    public function singleRecipePage(Recipe $recipe)
     {
         $recipe->load('ingredients', 'cookingInstructions:recipe_id,step,instruction');
         return Inertia::render('singleRecipe', [
@@ -48,9 +48,17 @@ class RecipeController extends Controller
 
     public function addRecipePage()
     {
-        $userId = Auth::id();
         return Inertia::render('addRecipe',[
-            'userId' => $userId
+            'userId' => Auth::id(),
+        ]);
+    }
+
+    public function editRecipePage(Recipe $recipe)
+    {
+        $recipe->load('ingredients', 'cookingInstructions');
+        return Inertia::render('editRecipe', [
+            'recipe' => $recipe,
+            'userId' => Auth::id()
         ]);
     }
 
