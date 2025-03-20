@@ -79,7 +79,7 @@ class RecipeController extends Controller
             'recipe_cooking_time' => 'required|string|numeric|min:1',
             'recipe_serves' => 'required|integer|numeric|min:1',
             'ingredient_name' => 'required|array',
-            'ingredient_name.*' => 'required|string',
+            'ingredient_name.*' => 'required|string|min:1',
             'ingredient_quantity' => 'required|array',
             'ingredient_quantity.*' => 'required|integer|min:1',
             'ingredient_unit' => 'required|array',
@@ -128,6 +128,14 @@ class RecipeController extends Controller
             ]);
         }
 
+        return redirect('/recipes');
+    }
+
+    public function editRecipe(Request $request)
+    {
+        $oldRecipe = Recipe::findOrFail($request->get('recipe_id'));
+        $this->create($request);
+//        $oldRecipe->delete();
         return redirect('/recipes');
     }
 }

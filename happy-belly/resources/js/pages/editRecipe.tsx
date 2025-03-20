@@ -9,7 +9,7 @@ import ErrorMessage from "@/components/error-message";
 import FormAddRecipeIngredientInput from "@/components/form-add-recipe-ingredient-input";
 import FormPlusMinusButton from "@/components/form-plus-minus-button";
 import FormAddCookingInstructionsInput from "@/components/form-add-cooking-instructions-input";
-import {useEffect, useState} from "react";
+import {FormEvent, useEffect, useState} from "react";
 import {useRecipeData} from "@/hooks/use-recipe-data";
 import {useIngredientFormData} from "@/hooks/use-ingredient-form-data";
 import {useCookingInstructionFormData} from "@/hooks/use-cooking-instruction-form-data";
@@ -59,12 +59,12 @@ export default function EditRecipe({userId, recipe, csrf_token}: {userId: number
             <h1>Edit Recipe</h1>
             <form
                 className="mx-4 grid grid-cols-[1fr_2fr] items-center gap-2"
-                // method="post"
-                // action="/recipe/add"
+                method="post"
+                action={`/recipe/edit/${recipe.id}`}
                 onSubmit={(e) => formErrorsExist(e)}
             >
                 {csrf_token && <input type="hidden" name="_token" value={csrf_token} />}
-
+                <input type="hidden" name="recipe_id" value={recipe.id} />
                 <label htmlFor="recipe_name">Recipe Name :</label>
                 <input
                     className="rounded border-1 border-black p-2 inset-shadow-sm inset-shadow-slate-300"
