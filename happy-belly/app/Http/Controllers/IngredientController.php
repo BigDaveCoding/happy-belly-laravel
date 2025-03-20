@@ -12,7 +12,7 @@ class IngredientController extends Controller
         $ingredientNames = $request->input('ingredient_name');
         foreach ($ingredientNames as $ingredientName) {
 
-            $ingredient = new Ingredient();
+            $ingredient = new Ingredient;
 
             $ingredient->name = $ingredientName;
             $ingredient->food_group = 'food_group';

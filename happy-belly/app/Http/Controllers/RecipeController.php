@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CookingInstruction;
 use App\Models\Ingredient;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
@@ -21,10 +20,11 @@ class RecipeController extends Controller
     {
         $adminRecipes = $this->adminRecipes();
         $userRecipes = $this->userRecipes();
+
         return Inertia::render('recipes', [
             'adminRecipes' => $adminRecipes,
             'userRecipes' => $userRecipes,
-            'userId' => Auth::id()
+            'userId' => Auth::id(),
         ]);
     }
 
@@ -41,34 +41,36 @@ class RecipeController extends Controller
     public function singleRecipePage(Recipe $recipe)
     {
         $recipe->load('ingredients', 'cookingInstructions:recipe_id,step,instruction');
+
         return Inertia::render('singleRecipe', [
             'recipe' => $recipe,
-            'userId' => Auth::id()
+            'userId' => Auth::id(),
         ]);
     }
 
-    public function addRecipePage() : Response
+    public function addRecipePage(): Response
     {
-        return Inertia::render('addRecipe',[
+        return Inertia::render('addRecipe', [
             'userId' => Auth::id(),
-            'csrf_token' => csrf_token()
+            'csrf_token' => csrf_token(),
         ]);
     }
 
     public function editRecipePage(Recipe $recipe): Response
     {
         $recipe->load('ingredients', 'cookingInstructions');
+
         return Inertia::render('editRecipe', [
             'recipe' => $recipe,
             'userId' => Auth::id(),
-            'csrf_token' => csrf_token()
+            'csrf_token' => csrf_token(),
         ]);
     }
 
     public function create(Request $request)
     {
-//        dd($userId);
-//        dd($request->all());
+        //        dd($userId);
+        //        dd($request->all());
         $userId = Auth::id();
 
         $validatedData = $request->validate([
@@ -88,9 +90,9 @@ class RecipeController extends Controller
             'cooking_instruction.*' => 'required|string',
         ]);
 
-//        dd($validatedData);
+        //        dd($validatedData);
 
-        $recipe = new Recipe();
+        $recipe = new Recipe;
         $recipe->name = $validatedData['recipe_name'];
         $recipe->description = $validatedData['recipe_description'];
         $recipe->image = 'https://placehold.co/600x400'; // static value
@@ -113,7 +115,7 @@ class RecipeController extends Controller
 
             $recipe->ingredients()->attach($ingredient, [
                 'quantity' => $ingredientQuantity[$index],
-                'unit' => $ingredientUnit[$index]
+                'unit' => $ingredientUnit[$index],
             ]);
         }
 
@@ -122,7 +124,7 @@ class RecipeController extends Controller
         foreach ($cookingInstructions as $index => $instruction) {
             $recipe->cookingInstructions()->create([
                 'step' => $index + 1,
-                'instruction' => $instruction
+                'instruction' => $instruction,
             ]);
         }
 

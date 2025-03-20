@@ -1,24 +1,21 @@
 <?php
 
-use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\RecipeController;
-use App\Models\Recipe;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('homepage',[
-        'userId' => Auth::id()
+    return Inertia::render('homepage', [
+        'userId' => Auth::id(),
     ]);
 })->name('home');
 
-//Route::middleware(['auth', 'verified'])->group(function () {
+// Route::middleware(['auth', 'verified'])->group(function () {
 //    Route::get('dashboard', function () {
 //        return Inertia::render('dashboard');
 //    })->name('dashboard');
-//});
+// });
 
 Route::middleware(['auth', 'verified', 'web'])->group(function () {
     Route::controller(RecipeController::class)->group(function () {
@@ -33,16 +30,15 @@ Route::middleware(['auth', 'verified', 'web'])->group(function () {
 Route::get('/debug-csrf', function () {
     return response()->json([
         'csrf_token' => csrf_token(),
-        'session_id' => session()->getId()
+        'session_id' => session()->getId(),
     ]);
 });
 
 Route::get('/get-csrf-token', function () {
     return response()->json([
-        'csrf_token' => csrf_token()
+        'csrf_token' => csrf_token(),
     ]);
 });
-
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

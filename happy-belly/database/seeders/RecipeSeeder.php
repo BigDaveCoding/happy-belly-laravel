@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -20,7 +19,7 @@ class RecipeSeeder extends Seeder
                 'image' => 'https://placehold.co/600x400',
                 'cooking_time' => fake()->time('i'),
                 'serves' => rand(1, 4),
-                'user_id' => rand(1,2),
+                'user_id' => rand(1, 2),
             ]);
         }
     }
