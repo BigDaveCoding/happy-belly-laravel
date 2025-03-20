@@ -7,12 +7,51 @@ use App\Models\Ingredient;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class RecipeController extends Controller
 {
     public function all()
     {
         return Recipe::all();
+    }
+
+    public function recipesPage()
+    {
+        $adminRecipes = $this->adminRecipes();
+        $userRecipes = $this->userRecipes();
+        return Inertia::render('recipes', [
+            'adminRecipes' => $adminRecipes,
+            'userRecipes' => $userRecipes,
+            'userId' => Auth::id()
+        ]);
+    }
+
+    public function adminRecipes()
+    {
+        return Recipe::where('user_id', 1)->get();
+    }
+
+    public function userRecipes()
+    {
+        return Recipe::where('user_id', Auth::id())->get();
+    }
+
+    public function singleRecipe(Recipe $recipe)
+    {
+        $recipe->load('ingredients', 'cookingInstructions:recipe_id,step,instruction');
+        return Inertia::render('singleRecipe', [
+            'recipe' => $recipe,
+            'userId' => Auth::id()
+        ]);
+    }
+
+    public function addRecipePage()
+    {
+        $userId = Auth::id();
+        return Inertia::render('addRecipe',[
+            'userId' => $userId
+        ]);
     }
 
     public function create(Request $request)

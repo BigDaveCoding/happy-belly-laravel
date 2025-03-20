@@ -14,48 +14,16 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
-});
-
-// creating API with recipe data to localhost:8000/recipeData
-Route::get('/recipeData', [RecipeController::class, 'all']);
+//Route::middleware(['auth', 'verified'])->group(function () {
+//    Route::get('dashboard', function () {
+//        return Inertia::render('dashboard');
+//    })->name('dashboard');
+//});
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/recipes', function () {
-
-        $recipes = Recipe::all();
-        $adminRecipes = Recipe::where('user_id', 1)->get();
-        $userRecipes = Recipe::where('user_id', Auth::id())->get();
-
-        return Inertia::render('recipes', [
-            'adminRecipes' => $adminRecipes,
-            'userRecipes' => $userRecipes,
-            'userId' => Auth::id()
-        ]);
-    })->name('recipes');
-});
-
-Route::get('/singleRecipe/{id}', function ($id) {
-
-    $recipe = Recipe::with('ingredients', 'cookingInstructions:recipe_id,step,instruction')->findOrFail($id); // Fetch the recipe by ID
-
-    return Inertia::render('singleRecipe', [
-        'recipe' => $recipe, // Passing data as a prop
-        'userId' => Auth::id()
-    ]);
-})->name('singleRecipe');
-
-
-
-Route::get('/recipe/add', function() {
-
-    $userId = Auth::id();
-    return Inertia::render('addRecipe', [
-        'userId' => $userId
-    ]);
+    Route::get('/recipes', [RecipeController::class, 'recipesPage']);
+    Route::get('/singleRecipe/{recipe}', [RecipeController::class, 'singleRecipe']);
+    Route::get('/recipe/add', [RecipeController::class, 'addRecipePage']);
 });
 
 Route::middleware(['web', 'auth'])->group(function () {
