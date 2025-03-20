@@ -50,6 +50,7 @@ class RecipeController extends Controller
     {
         return Inertia::render('addRecipe',[
             'userId' => Auth::id(),
+            'csrf_token' => csrf_token()
         ]);
     }
 

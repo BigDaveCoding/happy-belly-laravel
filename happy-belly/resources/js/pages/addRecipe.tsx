@@ -1,6 +1,4 @@
 import NavBar from "@/components/navbar";
-import {useEffect, useState} from "react";
-import GetCsrfToken from "@/functions/get-csrf-token";
 import {useIngredientFormData} from "@/hooks/use-ingredient-form-data";
 import {useRecipeData} from "@/hooks/use-recipe-data";
 import {useAddFormErrors} from "@/hooks/use-add-form-errors";
@@ -10,9 +8,7 @@ import FormPlusMinusButton from "@/components/form-plus-minus-button";
 import FormAddRecipeIngredientInput from "@/components/form-add-recipe-ingredient-input";
 import FormAddCookingInstructionsInput from "@/components/form-add-cooking-instructions-input";
 
-export default function AddRecipe({userId} : {userId : number}) {
-
-    const [csrfToken, setCsrfToken] = useState<string | null>(null);
+export default function AddRecipe({userId, csrf_token} : {userId : number, csrf_token : string}) {
 
     const {recipeData, inputRecipeData} = useRecipeData();
 
@@ -22,14 +18,8 @@ export default function AddRecipe({userId} : {userId : number}) {
 
     const {formErrors, errors, formErrorsExist} = useAddFormErrors({recipeData, ingredientData, cookingInstructions})
 
-    useEffect(() => {
-        async function assignToken() {
-            setCsrfToken(await GetCsrfToken())
-        }
-        assignToken()
-    },[])
-
     console.log(ingredientData)
+    console.log(csrf_token)
 
     return (
         <>
@@ -42,7 +32,7 @@ export default function AddRecipe({userId} : {userId : number}) {
                 onChange={(e) => inputRecipeData(e)}
                 onSubmit={(e) => formErrorsExist(e)}
             >
-                {csrfToken && <input type="hidden" name="_token" value={csrfToken} />}
+                {csrf_token && <input type="hidden" name="_token" value={csrf_token} />}
 
                 <label htmlFor="recipe_name">Recipe Name :</label>
                 <input
