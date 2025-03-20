@@ -8,6 +8,7 @@ use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class RecipeController extends Controller
 {
@@ -46,7 +47,7 @@ class RecipeController extends Controller
         ]);
     }
 
-    public function addRecipePage()
+    public function addRecipePage() : Response
     {
         return Inertia::render('addRecipe',[
             'userId' => Auth::id(),
@@ -54,12 +55,13 @@ class RecipeController extends Controller
         ]);
     }
 
-    public function editRecipePage(Recipe $recipe)
+    public function editRecipePage(Recipe $recipe): Response
     {
         $recipe->load('ingredients', 'cookingInstructions');
         return Inertia::render('editRecipe', [
             'recipe' => $recipe,
-            'userId' => Auth::id()
+            'userId' => Auth::id(),
+            'csrf_token' => csrf_token()
         ]);
     }
 

@@ -14,12 +14,10 @@ import {useRecipeData} from "@/hooks/use-recipe-data";
 import {useIngredientFormData} from "@/hooks/use-ingredient-form-data";
 import {useCookingInstructionFormData} from "@/hooks/use-cooking-instruction-form-data";
 import {useAddFormErrors} from "@/hooks/use-add-form-errors";
-import GetCsrfToken from "@/functions/get-csrf-token";
 
-export default function EditRecipe({userId, recipe }: {userId: number|null, recipe: SingleRecipeIngredientsInstructions }) {
+export default function EditRecipe({userId, recipe, csrf_token}: {userId: number|null, recipe: SingleRecipeIngredientsInstructions, csrf_token : string }) {
     console.log(recipe)
 
-    const [csrfToken, setCsrfToken] = useState<string | null>(null);
 
     const {recipeData, inputRecipeData} = useRecipeData();
 
@@ -30,10 +28,6 @@ export default function EditRecipe({userId, recipe }: {userId: number|null, reci
     const {formErrors, errors, formErrorsExist} = useAddFormErrors({recipeData, ingredientData, cookingInstructions})
 
     useEffect(() => {
-        async function assignToken() {
-            setCsrfToken(await GetCsrfToken())
-        }
-        assignToken()
         updateRecipeDataFields()
         updateIngredientDataFields()
         updateCookingInstructionFields()
@@ -65,12 +59,11 @@ export default function EditRecipe({userId, recipe }: {userId: number|null, reci
             <h1>Edit Recipe</h1>
             <form
                 className="mx-4 grid grid-cols-[1fr_2fr] items-center gap-2"
-                method="post"
-                action="/recipe/add"
-                onChange={(e) => inputRecipeData(e)}
+                // method="post"
+                // action="/recipe/add"
                 onSubmit={(e) => formErrorsExist(e)}
             >
-                {csrfToken && <input type="hidden" name="_token" value={csrfToken} />}
+                {csrf_token && <input type="hidden" name="_token" value={csrf_token} />}
 
                 <label htmlFor="recipe_name">Recipe Name :</label>
                 <input
@@ -79,6 +72,8 @@ export default function EditRecipe({userId, recipe }: {userId: number|null, reci
                     name="recipe_name"
                     placeholder="Enchiladas"
                     value={recipeData.recipe_name}
+                    onChange={(e) => inputRecipeData(e)}
+
                 />
                 {formErrors &&
                     recipeData.recipe_name.length < 4 &&
@@ -90,8 +85,8 @@ export default function EditRecipe({userId, recipe }: {userId: number|null, reci
                     className="rounded border-1 border-black p-2 inset-shadow-sm inset-shadow-slate-300"
                     name="recipe_description"
                     placeholder="How would you describe your recipe?"
-                    value={recipe.description}
-
+                    value={recipeData.recipe_description}
+                    onChange={(e) => inputRecipeData(e)}
                 ></textarea>
                 {formErrors && (recipeData.recipe_description.length < 10 || recipeData.recipe_description.length > 5000) && (
                     <ErrorMessage errorMessage={errors.recipe_description} extraCss={"col-span-2"} />
@@ -116,8 +111,8 @@ export default function EditRecipe({userId, recipe }: {userId: number|null, reci
                     type="text"
                     name="recipe_cooking_time"
                     placeholder="30"
-                    value={recipe.cooking_time}
-
+                    value={recipeData.recipe_cooking_time}
+                    onChange={(e) => inputRecipeData(e)}
                 />
                 {formErrors &&
                     (isNaN(parseInt(recipeData.recipe_cooking_time)) || parseInt(recipeData.recipe_cooking_time) <= 0) &&
@@ -130,7 +125,8 @@ export default function EditRecipe({userId, recipe }: {userId: number|null, reci
                     type="number"
                     name="recipe_serves"
                     placeholder="4"
-                    value={recipe.serves}
+                    value={recipeData.recipe_serves}
+                    onChange={(e) => inputRecipeData(e)}
                 />
                 {formErrors &&
                     (isNaN(recipeData.recipe_serves) || recipeData.recipe_serves <= 0) &&
