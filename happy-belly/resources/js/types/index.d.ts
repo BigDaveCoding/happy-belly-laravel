@@ -87,7 +87,7 @@ export interface RecipeFormData {
 }
 export interface IngredientFormData {
     ingredient_name: string;
-    ingredient_quantity: number | null;
+    ingredient_quantity: number;
     ingredient_unit: string;
     ingredient_allergen: boolean;
 }

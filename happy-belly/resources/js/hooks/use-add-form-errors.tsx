@@ -33,7 +33,7 @@ export function useAddFormErrors({recipeData, ingredientData, cookingInstruction
     function formIngredientErrorsExist() : boolean {
         ingredientData.forEach(ingredient => {
             if(ingredient.ingredient_name.length === 0 ||
-                (ingredient.ingredient_quantity.length === 0 || isNaN(parseInt(ingredient.ingredient_quantity)) || parseInt(ingredient.ingredient_quantity) <= 0)
+                (isNaN(ingredient.ingredient_quantity) || ingredient.ingredient_quantity <= 0)
             ){
                 return true;
             }

@@ -3,7 +3,7 @@ import {FormEvent, useState} from "react";
 
 export function useIngredientFormData() {
     const [ingredientData, setIngredientData] = useState<IngredientFormData[]>([
-        {ingredient_name: '', ingredient_quantity: null, ingredient_unit: '', ingredient_allergen : false}
+        {ingredient_name: '', ingredient_quantity: 0, ingredient_unit: '', ingredient_allergen : false}
     ])
 
     function updateIngredientData(e: FormEvent, index: number) {
@@ -22,7 +22,7 @@ export function useIngredientFormData() {
     function addIngredient(): void {
         setIngredientData([
             ...ingredientData,
-            {ingredient_name: '', ingredient_quantity: null, ingredient_unit: '', ingredient_allergen : false}
+            {ingredient_name: '', ingredient_quantity: 0, ingredient_unit: '', ingredient_allergen : false}
         ])
     }
 

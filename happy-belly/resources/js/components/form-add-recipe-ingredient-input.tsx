@@ -45,7 +45,7 @@ export default function FormAddRecipeIngredientInput({ingredientData, formErrors
                                     onChange={(e) => {updateIngredientData(e, index)}}
                                 />
                                 {formErrors &&
-                                    (ingredient.ingredient_quantity.length === 0 || isNaN(parseInt(ingredient.ingredient_quantity)) || parseInt(ingredient.ingredient_quantity) <= 0) &&
+                                    (isNaN(ingredient.ingredient_quantity) || ingredient.ingredient_quantity <= 0) &&
                                     <ErrorMessage errorMessage={errors.ingredient_quantity} extraCss={"col-span-2"} />
                                 }
                                 <label htmlFor="ingredient_allergen[]">
