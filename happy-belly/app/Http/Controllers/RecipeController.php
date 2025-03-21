@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateRecipeRequest;
 use App\Models\Ingredient;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
@@ -67,7 +68,7 @@ class RecipeController extends Controller
         ]);
     }
 
-    public function create(Request $request)
+    public function create(CreateRecipeRequest $request)
     {
         //        dd($userId);
         //        dd($request->all());

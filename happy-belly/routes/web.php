@@ -11,11 +11,11 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-// Route::middleware(['auth', 'verified'])->group(function () {
-//    Route::get('dashboard', function () {
-//        return Inertia::render('dashboard');
-//    })->name('dashboard');
-// });
+ Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('dashboard', function () {
+        return Inertia::render('dashboard');
+    })->name('dashboard');
+ });
 
 Route::middleware(['auth', 'verified', 'web'])->group(function () {
     Route::controller(RecipeController::class)->group(function () {
