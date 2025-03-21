@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Providers\RecipeControllerService;
 
 class RecipeController extends Controller
 {
@@ -70,47 +71,15 @@ class RecipeController extends Controller
 
     public function create(CreateRecipeRequest $request)
     {
-        //        dd($userId);
-        //        dd($request->all());
         $userId = Auth::id();
 
         $validatedData = $request->validated();
 
-        $recipe = new Recipe;
-        $recipe->name = $validatedData['recipe_name'];
-        $recipe->description = $validatedData['recipe_description'];
-        $recipe->image = 'https://placehold.co/600x400'; // static value
-        $recipe->cooking_time = $validatedData['recipe_cooking_time'];
-        $recipe->serves = $validatedData['recipe_serves'];
-        $recipe->user_id = $userId;
+        $recipe = RecipeControllerService::createRecipe($validatedData, $userId);
 
-        $recipe->save();
+        RecipeControllerService::addIngredients($validatedData, $recipe);
 
-        $ingredientNames = $validatedData['ingredient_name'];
-        $ingredientQuantity = $validatedData['ingredient_quantity'];
-        $ingredientUnit = $validatedData['ingredient_unit'];
-        $ingredientAllergen = $validatedData['ingredient_allergen'];
-
-        foreach ($ingredientNames as $index => $ingredientName) {
-
-            $ingredient = Ingredient::firstOrCreate(['name' => $ingredientName,
-                'food_group' => 'food_group', // static value
-                'allergen' => $ingredientAllergen[$index]]);
-
-            $recipe->ingredients()->attach($ingredient, [
-                'quantity' => $ingredientQuantity[$index],
-                'unit' => $ingredientUnit[$index],
-            ]);
-        }
-
-        $cookingInstructions = $validatedData['cooking_instruction'];
-
-        foreach ($cookingInstructions as $index => $instruction) {
-            $recipe->cookingInstructions()->create([
-                'step' => $index + 1,
-                'instruction' => $instruction,
-            ]);
-        }
+        RecipeControllerService::addCookingInstructions($validatedData, $recipe);
 
         return redirect('/recipes');
     }
