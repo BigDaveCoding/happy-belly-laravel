@@ -24,7 +24,7 @@ Route::middleware(['auth', 'verified', 'web'])->group(function () {
         Route::get('/recipe/add', 'addRecipePage');
         Route::get('/recipe/edit/{recipe}', 'editRecipePage');
         Route::post('/recipe/add', 'create');
-        Route::post('/recipe/edit/{recipe}', 'editRecipe');
+        Route::patch('/recipe/edit/{recipe}', 'editRecipe');
     });
 });
 

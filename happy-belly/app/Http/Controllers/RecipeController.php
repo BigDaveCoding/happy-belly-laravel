@@ -131,11 +131,69 @@ class RecipeController extends Controller
         return redirect('/recipes');
     }
 
-    public function editRecipe(Request $request)
+    public function editRecipe(Request $request, $id)
     {
-        $oldRecipe = Recipe::findOrFail($request->get('recipe_id'));
-        $this->create($request);
-//        $oldRecipe->delete();
-        return redirect('/recipes');
+        // Find the existing recipe
+        $recipe = Recipe::findOrFail($id);
+
+        // Validate incoming data
+        $validatedData = $request->validate([
+            'recipe_name' => 'required|string|max:255|min:4',
+            'recipe_description' => 'required|string|min:10',
+            'recipe_cooking_time' => 'required|numeric|min:1',
+            'recipe_serves' => 'required|integer|min:1',
+            'ingredient_name' => 'required|array',
+            'ingredient_name.*' => 'required|string|min:1',
+            'ingredient_quantity' => 'required|array',
+            'ingredient_quantity.*' => 'required|integer|min:1',
+            'ingredient_unit' => 'required|array',
+            'ingredient_unit.*' => 'nullable|string',
+            'ingredient_allergen' => 'required|array',
+            'ingredient_allergen.*' => 'required|boolean',
+            'cooking_instruction' => 'required|array',
+            'cooking_instruction.*' => 'required|string',
+        ]);
+
+        // Update recipe details
+        $recipe->name = $validatedData['recipe_name'];
+        $recipe->description = $validatedData['recipe_description'];
+        $recipe->cooking_time = $validatedData['recipe_cooking_time'];
+        $recipe->serves = $validatedData['recipe_serves'];
+        $recipe->save();
+
+        // Sync ingredients
+        $recipe->ingredients()->detach(); // Remove old ingredients
+
+        $ingredientNames = $validatedData['ingredient_name'];
+        $ingredientQuantity = $validatedData['ingredient_quantity'];
+        $ingredientUnit = $validatedData['ingredient_unit'];
+        $ingredientAllergen = $validatedData['ingredient_allergen'];
+
+        foreach ($ingredientNames as $index => $ingredientName) {
+            $ingredient = Ingredient::firstOrCreate([
+                'name' => $ingredientName,
+                'food_group' => 'food_group', // Static value
+                'allergen' => $ingredientAllergen[$index]
+            ]);
+
+            $recipe->ingredients()->attach($ingredient, [
+                'quantity' => $ingredientQuantity[$index],
+                'unit' => $ingredientUnit[$index],
+            ]);
+        }
+
+        // Sync cooking instructions
+        $recipe->cookingInstructions()->delete(); // Remove old instructions
+
+        $cookingInstructions = $validatedData['cooking_instruction'];
+        foreach ($cookingInstructions as $index => $instruction) {
+            $recipe->cookingInstructions()->create([
+                'step' => $index + 1,
+                'instruction' => $instruction,
+            ]);
+        }
+
+        return redirect('/recipes')->with('success', 'Recipe updated successfully');
     }
+
 }

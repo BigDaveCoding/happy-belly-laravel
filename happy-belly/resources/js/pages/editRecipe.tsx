@@ -63,8 +63,9 @@ export default function EditRecipe({userId, recipe, csrf_token}: {userId: number
                 action={`/recipe/edit/${recipe.id}`}
                 onSubmit={(e) => formErrorsExist(e)}
             >
-                {csrf_token && <input type="hidden" name="_token" value={csrf_token} />}
-                <input type="hidden" name="recipe_id" value={recipe.id} />
+                {csrf_token && <input type="hidden" name="_token" value={csrf_token}/>}
+                <input type="hidden" name="_method" value="PATCH"/>
+                {/*<input type="hidden" name="recipe_id" value={recipe.id}/>*/}
                 <label htmlFor="recipe_name">Recipe Name :</label>
                 <input
                     className="rounded border-1 border-black p-2 inset-shadow-sm inset-shadow-slate-300"
@@ -77,7 +78,7 @@ export default function EditRecipe({userId, recipe, csrf_token}: {userId: number
                 />
                 {formErrors &&
                     recipeData.recipe_name.length < 4 &&
-                    <ErrorMessage errorMessage={errors.recipe_name} extraCss={"col-span-2"} />
+                    <ErrorMessage errorMessage={errors.recipe_name} extraCss={"col-span-2"}/>
                 }
 
                 <label htmlFor="recipe_description">Description :</label>
@@ -89,7 +90,7 @@ export default function EditRecipe({userId, recipe, csrf_token}: {userId: number
                     onChange={(e) => inputRecipeData(e)}
                 ></textarea>
                 {formErrors && (recipeData.recipe_description.length < 10 || recipeData.recipe_description.length > 5000) && (
-                    <ErrorMessage errorMessage={errors.recipe_description} extraCss={"col-span-2"} />
+                    <ErrorMessage errorMessage={errors.recipe_description} extraCss={"col-span-2"}/>
                 )}
 
                 <label className={`col-span-2`} htmlFor="recipe_image">
@@ -100,10 +101,11 @@ export default function EditRecipe({userId, recipe, csrf_token}: {userId: number
                     type="file"
                     name="recipe_image"
                 />
-                {recipeData.recipe_image.length > 0 && <img className="col-span-2" src={recipeData.recipe_image} alt="" />}
+                {recipeData.recipe_image.length > 0 &&
+                    <img className="col-span-2" src={recipeData.recipe_image} alt=""/>}
 
                 <label htmlFor="recipe_cooking_time">
-                    Cooking Time :<br />
+                    Cooking Time :<br/>
                     <i>(Minutes)</i>
                 </label>
                 <input
@@ -116,7 +118,7 @@ export default function EditRecipe({userId, recipe, csrf_token}: {userId: number
                 />
                 {formErrors &&
                     (isNaN(parseInt(recipeData.recipe_cooking_time)) || parseInt(recipeData.recipe_cooking_time) <= 0) &&
-                    <ErrorMessage errorMessage={errors.recipe_cooking_time} extraCss={"col-span-2"} />
+                    <ErrorMessage errorMessage={errors.recipe_cooking_time} extraCss={"col-span-2"}/>
                 }
 
                 <label htmlFor="recipe_serves">Serves :</label>
@@ -130,10 +132,10 @@ export default function EditRecipe({userId, recipe, csrf_token}: {userId: number
                 />
                 {formErrors &&
                     (isNaN(recipeData.recipe_serves) || recipeData.recipe_serves <= 0) &&
-                    <ErrorMessage errorMessage={errors.recipe_serves} extraCss={"col-span-2"} />
+                    <ErrorMessage errorMessage={errors.recipe_serves} extraCss={"col-span-2"}/>
                 }
 
-                <hr className="col-span-2 border-black my-2" />
+                <hr className="col-span-2 border-black my-2"/>
 
                 <h2 className="col-span-2">Ingredients</h2>
 
@@ -146,7 +148,7 @@ export default function EditRecipe({userId, recipe, csrf_token}: {userId: number
                     removeIngredient={removeIngredient}
                 />
 
-                <FormPlusMinusButton addRemoveFunction={addIngredient} plusOrMinus={true} />
+                <FormPlusMinusButton addRemoveFunction={addIngredient} plusOrMinus={true}/>
 
 
                 <h2 className="col-span-2">Cooking Instructions</h2>
@@ -159,7 +161,8 @@ export default function EditRecipe({userId, recipe, csrf_token}: {userId: number
                     addCookingInstruction={addCookingInstruction}
                 />
 
-                {cookingInstructions.length === 0 && <FormPlusMinusButton addRemoveFunction={() => addCookingInstruction(0)} plusOrMinus={true} />}
+                {cookingInstructions.length === 0 &&
+                    <FormPlusMinusButton addRemoveFunction={() => addCookingInstruction(0)} plusOrMinus={true}/>}
 
                 <input
                     className="bg-primary-color col-span-2 w-8/12 justify-self-center rounded border-1 p-2 inset-shadow-sm inset-shadow-black/30"
