@@ -25,7 +25,7 @@ class RecipeControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_RecipeController_returns_correct_data()
+    public function test_RecipeController_returnsCorrectAdminData() : void
     {
         $user = User::factory()->create(); // Create and log in user
         $recipe = Recipe::factory()->create(['user_id' => $user->id]);
@@ -42,6 +42,30 @@ class RecipeControllerTest extends TestCase
             })
             ->where('userId', $user->id)
         );
+    }
+
+    public function test_RecipeController_returnsCorrectUserData() : void
+    {
+        $adminUser = User::factory()->create(['id' => 1]);
+
+        $user = User::factory()->create();
+        $user->id = 2;
+        $user->save();
+
+        $adminRecipe = Recipe::factory()->create(['user_id' => $adminUser->id]);
+        $userRecipeOne = Recipe::factory()->create(['user_id' => $user->id]);
+        $userRecipeTwo = Recipe::factory()->create(['user_id' => $user->id]);
+
+        $this->actingAs($user);
+
+        $response = $this->get('/recipes');
+        $response->assertInertia(function (AssertableInertia $page) {
+            $page->has('adminRecipes', 1);
+            $page->has('userRecipes', 2, function (AssertableInertia $data) {
+                $data->hasAll('id', 'name', 'description', 'image', 'cooking_time', 'serves', 'user_id');
+            });
+            $page->has('userId');
+        });
     }
 
 }

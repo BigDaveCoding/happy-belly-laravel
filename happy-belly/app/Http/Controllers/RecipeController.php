@@ -74,24 +74,7 @@ class RecipeController extends Controller
         //        dd($request->all());
         $userId = Auth::id();
 
-        $validatedData = $request->validate([
-            'recipe_name' => 'required|string|max:255|min:4',
-            'recipe_description' => 'required|string|min:10',
-            'recipe_cooking_time' => 'required|string|numeric|min:1',
-            'recipe_serves' => 'required|integer|numeric|min:1',
-            'ingredient_name' => 'required|array',
-            'ingredient_name.*' => 'required|string|min:1',
-            'ingredient_quantity' => 'required|array',
-            'ingredient_quantity.*' => 'required|integer|min:1',
-            'ingredient_unit' => 'required|array',
-            'ingredient_unit.*' => 'nullable|string',
-            'ingredient_allergen' => 'required|array',
-            'ingredient_allergen.*' => 'required|boolean',
-            'cooking_instruction' => 'required|array',
-            'cooking_instruction.*' => 'required|string',
-        ]);
-
-        //        dd($validatedData);
+        $validatedData = $request->validated();
 
         $recipe = new Recipe;
         $recipe->name = $validatedData['recipe_name'];
@@ -132,28 +115,30 @@ class RecipeController extends Controller
         return redirect('/recipes');
     }
 
-    public function editRecipe(Request $request, $id)
+    public function editRecipe(CreateRecipeRequest $request, $id)
     {
         // Find the existing recipe
         $recipe = Recipe::findOrFail($id);
 
-        // Validate incoming data
-        $validatedData = $request->validate([
-            'recipe_name' => 'required|string|max:255|min:4',
-            'recipe_description' => 'required|string|min:10',
-            'recipe_cooking_time' => 'required|numeric|min:1',
-            'recipe_serves' => 'required|integer|min:1',
-            'ingredient_name' => 'required|array',
-            'ingredient_name.*' => 'required|string|min:1',
-            'ingredient_quantity' => 'required|array',
-            'ingredient_quantity.*' => 'required|integer|min:1',
-            'ingredient_unit' => 'required|array',
-            'ingredient_unit.*' => 'nullable|string',
-            'ingredient_allergen' => 'required|array',
-            'ingredient_allergen.*' => 'required|boolean',
-            'cooking_instruction' => 'required|array',
-            'cooking_instruction.*' => 'required|string',
-        ]);
+//        // Validate incoming data
+//        $validatedData = $request->validate([
+//            'recipe_name' => 'required|string|max:255|min:4',
+//            'recipe_description' => 'required|string|min:10',
+//            'recipe_cooking_time' => 'required|numeric|min:1',
+//            'recipe_serves' => 'required|integer|min:1',
+//            'ingredient_name' => 'required|array',
+//            'ingredient_name.*' => 'required|string|min:1',
+//            'ingredient_quantity' => 'required|array',
+//            'ingredient_quantity.*' => 'required|integer|min:1',
+//            'ingredient_unit' => 'required|array',
+//            'ingredient_unit.*' => 'nullable|string',
+//            'ingredient_allergen' => 'required|array',
+//            'ingredient_allergen.*' => 'required|boolean',
+//            'cooking_instruction' => 'required|array',
+//            'cooking_instruction.*' => 'required|string',
+//        ]);
+
+        $validatedData = $request->validated();
 
         // Update recipe details
         $recipe->name = $validatedData['recipe_name'];
@@ -194,7 +179,7 @@ class RecipeController extends Controller
             ]);
         }
 
-        return redirect('/recipes')->with('success', 'Recipe updated successfully');
+        return redirect('/recipes');
     }
 
 }
