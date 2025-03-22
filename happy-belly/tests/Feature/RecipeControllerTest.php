@@ -27,7 +27,7 @@ class RecipeControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_RecipeController_returnsCorrectAdminData() : void
+    public function test_RecipeController_recipesPage_returnsCorrectAdminData() : void
     {
         $user = User::factory()->create(); // Create and log in user
         $recipe = Recipe::factory()->create(['user_id' => $user->id]);
@@ -46,7 +46,7 @@ class RecipeControllerTest extends TestCase
         );
     }
 
-    public function test_RecipeController_returnsCorrectUserData() : void
+    public function test_RecipeController_recipesPage_returnsCorrectUserData() : void
     {
         $adminUser = User::factory()->create(['id' => 1]);
 
@@ -102,6 +102,7 @@ class RecipeControllerTest extends TestCase
                             $cookingInstructions->hasAll('recipe_id', 'step', 'instruction');
                         });
             });
+            $page->where('userId', 1);
         });
     }
 
