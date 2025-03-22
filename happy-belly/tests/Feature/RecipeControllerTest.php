@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\CookingInstruction;
+use App\Models\Ingredient;
 use App\Models\Recipe;
 use App\Models\User;
 use Database\Factories\UserFactory;
@@ -65,6 +67,41 @@ class RecipeControllerTest extends TestCase
                 $data->hasAll('id', 'name', 'description', 'image', 'cooking_time', 'serves', 'user_id');
             });
             $page->has('userId');
+        });
+    }
+
+    public function test_RecipeController_singleRecipePage_returnsCorrectData() : void
+    {
+        $user = User::factory()->create(['id' => 1]);
+        $recipe = Recipe::factory()->create(['id' => 1]);
+        $ingredient = Ingredient::factory()->create();
+        $recipe->ingredients()->attach($ingredient->id, ['quantity' => 1, 'unit' => 'g']);
+        $cookingInstructions = CookingInstruction::factory()->create(['recipe_id' => $recipe->id]);
+
+        $this->actingAs($user);
+
+        $response = $this->get('/singleRecipe/1');
+        $response->assertInertia(function (AssertableInertia $page) {
+            $page->has('recipe', function (AssertableInertia $data) {
+                $data->hasAll('id',
+                    'cooking_instructions',
+                    'cooking_time',
+                    'description',
+                    'image',
+                    'ingredients',
+                    'name',
+                    'serves',
+                    'user_id' )
+                        ->has('ingredients', 1, function (AssertableInertia $ingredients) {
+                            $ingredients->hasAll('id', 'allergen', 'food_group', 'name', 'pivot')
+                                ->has('pivot', function (AssertableInertia $pivot) {
+                                    $pivot->hasAll('quantity', 'unit')->etc();
+                                });
+                        })
+                        ->has('cooking_instructions', 1, function (AssertableInertia $cookingInstructions) {
+                            $cookingInstructions->hasAll('recipe_id', 'step', 'instruction');
+                        });
+            });
         });
     }
 
